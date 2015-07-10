@@ -1,3 +1,2 @@
-CHIMEHACK2
-
-Android Application
+# CHIMEHACK2
+Android App 
