@@ -10,8 +10,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        PareCredentials pc = new PareCredentials();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY);
     }
 
     @Override
