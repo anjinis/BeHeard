@@ -1,5 +1,6 @@
 package chimehack.beheard;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.parse.Parse;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -20,11 +19,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // intial parse setup
         setupParse();
 
         /*
          * View Implementation
          */
+
+        // Action Bar
+        ActionBar actionBar = getActionBar();
 
         // Maps Button
         mMapButton = (Button) findViewById(R.id.map_button);
