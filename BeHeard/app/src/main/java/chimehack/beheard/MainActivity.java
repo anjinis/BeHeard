@@ -7,13 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.parse.Parse;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
-    ListView mLatest;
     Button mMapButton;
 
     @Override
@@ -21,55 +20,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-         * Parse
-         */
-        ParseCredentials pc = new ParseCredentials();
-        //Parse.enableLocalDatastore(this);
-        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());  
-        ParseObject post = new ParseObject("Post");
-        post.put("message","Hello");
-        post.put("severity",1);
-        post.saveInBackground();
-        /*
-            // a new post object
-            // this would be in the view form
-            array = []; // not sure how to do in java
-            ParseObject post = new ParseObject("Post");
-            post.put("message",<textfield value>);
-            post.put("severity",<radiobutton value>);
-            post.saveInBackground();
-            // add post to array
-            array.push(post); // not sure how to do this in java
-            
-            // these are your posts
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.getInBackground(array[post].get("id"), new GetCallback<ParseObject>() {
-              public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                  // get object
-                } else {
-                  // something went wrong
-                }
-              }
-            });
-
-            // these are the posts from everyone
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Post");
-            query.findInBackground(new FindCallback<ParseObject>() {
-                public void done(List<ParseObject> posts, ParseException e) {
-                    if (e == null) {
-                        // the objects
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
-        */
+        setupParse();
 
         /*
          * View Implementation
          */
+
+        // Maps Button
         mMapButton = (Button) findViewById(R.id.map_button);
         mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
 
     }
 
@@ -101,5 +59,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /**
+     *  Setup Parse Essentials
+     */
+    private void setupParse() {
+        /*
+         * Parse
+         */
+        ParseCredentials pc = new ParseCredentials();
+        //Parse.enableLocalDatastore(this);
+        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
+    }
+
+    /**
+     * Make Post into DB
+     */
+    private void makePost(Post newPost) {
+
+    }
+
+    /**
+     * Get single Post from DB
+     */
+    private Post query(){
+        return new Post(); // return query results here
     }
 }
