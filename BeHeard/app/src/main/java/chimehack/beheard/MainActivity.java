@@ -63,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
             });
         */
         /*
-         *
+         * View Implementation
          */
+        //mFeed = (ListView)
     }
 
     @Override
