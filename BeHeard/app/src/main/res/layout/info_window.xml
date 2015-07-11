@@ -18,7 +18,7 @@
             android:id="@+id/tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             />
 
@@ -26,21 +26,9 @@
         <TextView android:id="@+id/tv_snippet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="15sp"
             />
 
-        <TextView
-            android:id="@+id/tv_lat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="5sp"
-
-            />
-
-        <TextView android:id="@+id/tv_lng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="5sp"
 
             />
 
