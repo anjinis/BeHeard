@@ -12,6 +12,11 @@
         android:minHeight="?attr/actionBarSize">
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feed_button_text" />
+
+        <Button
             android:id="@+id/map_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +24,11 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
 
-
-
+    </ListView>
 </RelativeLayout>

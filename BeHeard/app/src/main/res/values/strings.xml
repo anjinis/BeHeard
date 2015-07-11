@@ -2,8 +2,7 @@
     <string name="app_name">BeHeard</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main">BeHeard</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="map_button_text">Map</string>
+    <string name="map_button_text">Nearby</string>
+    <string name="feed_button_text">Latest</string>
 </resources>

@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="6dip">
+
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/feedback_1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:gravity="center"
+        android:text="Example Post Text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/feedback_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:ellipsize="marquee"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="Send Love"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/feedback_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message"
+        android:layout_toEndOf="@+id/feedback_1"
+        android:padding="5dp"
+        android:text="Unacceptable"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/feedback_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message"
+        android:layout_toEndOf="@+id/feedback_2"
+        android:padding="5dp"
+        android:text="Me Too"
+        android:textSize="12sp" />
+
+</RelativeLayout> 
