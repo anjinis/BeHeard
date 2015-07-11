@@ -52,7 +52,7 @@ public class MapsActivity extends FragmentActivity implements
         LocationListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private static final float initialZoom = 5;
+    private static final float initialZoom = 15;
 
     // To initialize how often to detect location changes
     private LocationRequest mLocationRequest;
@@ -137,16 +137,62 @@ public class MapsActivity extends FragmentActivity implements
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
+            // Try to obtain the referecen of the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
+                // add the layout for customizedInfoWindow in Google Maps
+                mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    @Override
+                    // Returning null here will automatically call getInfoContents
+                    public View getInfoWindow(Marker arg0) {
+                        return null;
+                    }
+
+                    // Get the information to be displayed on the current window
+                    @Override
+                    public View getInfoContents(Marker marker) {
+                        // Get the layout file for InfoContent
+                        View v = getLayoutInflater().inflate(R.layout.info_window, null); // null means dont attach to any parent window
+                        TextView tvDescription = (TextView) v.findViewById(R.id.tv_description);
+                        TextView tvSnippet = (TextView) v.findViewById(R.id.tv_snippet);
+                        TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
+                        TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
+
+                        // Get position of marker
+                        LatLng markerPos = marker.getPosition();
+                        tvLat.setText("Latitude: " + markerPos.latitude);
+                        tvLng.setText("Longitude: " + markerPos.longitude);
+                        tvSnippet.setText(marker.getSnippet());
+                        // Problem: How to pass the string into this argument?
+                        // Solution 1: Call a function that this function can access and that function
+                        //          will dynamically access the marker's data in a different database.
+                        // Of course, you can use the marker's latitude and longitude as keys to that database
+                        // as it will always be unique.
+                        // Solution 2: Pass everything inside Snippet, comma separated and get the values there =)
+                        //tvDescription.setText("This place is horrible, all the guys hit on me. I am never coming back to this party again");
+                        tvDescription.setText(getDescriptionFromMarkerSoon(markerPos.latitude, markerPos.longitude));
+                        // Return the view created
+                        return v;
+                    }
+                });
                 setUpMap();
+                // Add the My Location button to the map
+                // which moves camera position to show user's current location
+                // Method of finding the location is hidden from developer by Google
+                // You will notice a small button on the right corner of the map,
+                // Touch that and it will bring you to your location on the map.
+                // Note: Will use more battery when this is pressed
+                // cause will keep using power to use GPS
+                // Can make sure don't use GPS by commenting out
+                // uses:permission FINE_LOCATION on AndroidManifest.xml
+                // but this function WILL USE GPS and won't work if don't enable GPS
+                mMap.setMyLocationEnabled(true);
             }
         }
     }
-
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
@@ -200,7 +246,6 @@ public class MapsActivity extends FragmentActivity implements
         // Move map to that location
         gotoLocation(latitude, longitude, initialZoom);
     }
-
 
     // This allows you to set a marker to a map object
     private void setMarker(String markerTitle, double latitude, double longitude) {
@@ -273,4 +318,17 @@ public class MapsActivity extends FragmentActivity implements
         Toast.makeText(this, "Soon: Latest Location is: " + location.toString(), Toast.LENGTH_SHORT).show();
         return;
     }
+
+
+    // This function is where you do REST API or whatever to get the data needed to put into your markers
+    private String getDescriptionFromMarkerSoon(double latitude, double longitude) {
+
+        // Access database or data structure here using arguments as key
+        if (longitude > 0) {
+            return "I am a boy";
+        } else {
+            return "I am a girl";
+        }
+    }
+
 }
