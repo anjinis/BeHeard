@@ -1,16 +1,20 @@
 package chimehack.beheard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
-    ListView mFeed;
+    ListView mLatest;
+    Button mMapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +66,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         */
+
         /*
          * View Implementation
          */
-        //mFeed = (ListView)
+        mMapButton = (Button) findViewById(R.id.map_button);
+        mMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
