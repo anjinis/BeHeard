@@ -53,7 +53,6 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static final float initialZoom = 15;
 
@@ -179,6 +178,23 @@ public class MapsActivity extends FragmentActivity implements
                         return v;
                     }
                 });
+
+                // This function is called each time a position on map is clicked
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    // It will pass in the latLng object of location that was clicked
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        setMarker("Hey", latLng.latitude, latLng.longitude);
+                    }
+                });
+
+
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                        resetMarker();
+                    }
+                });
                 setUpMap();
                 // Add the My Location button to the map
                 // which moves camera position to show user's current location
@@ -246,16 +262,18 @@ public class MapsActivity extends FragmentActivity implements
         gotoLocation(latitude, longitude, initialZoom);
     }
 
-    // This allows you to set a marker to a map object
-    private void setMarker(String markerTitle, double latitude, double longitude) {
-
+    // This removes all current markers on the map
+    private void resetMarker() {
         int numberOfMarkers = markers.size();
         // Remove any previous markers
         for(Marker item: markers){
             System.out.println("retrieved element: " + item);
             item.remove();
         }
+    }
 
+    // This allows you to set a marker to a map object
+    private void setMarker(String markerTitle, double latitude, double longitude) {
         // Make a new GeoCoder object
         Geocoder gc = new Geocoder(this);
         String snippetTitle = "Unknown";
@@ -280,7 +298,6 @@ public class MapsActivity extends FragmentActivity implements
                 .position(new LatLng(latitude, longitude))
                 .snippet(snippetTitle)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
-
 
         // For default graphics for marker, use this
         //MarkerOptions options = new MarkerOptions().title(markerTitle)
