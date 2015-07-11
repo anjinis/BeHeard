@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 //-----------------------------------------------------------------
 import android.app.Dialog; // to use Dialog
@@ -46,7 +47,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import android.os.Bundle;
 
-
 // need FragmentActivity instead of Activity since running on fragment in activity_maps.xml
 // Need implement ConnectionCallbacks and OnConnectionFailedListener to get current location
 public class MapsActivity extends FragmentActivity implements
@@ -59,8 +59,10 @@ public class MapsActivity extends FragmentActivity implements
 
     // To initialize how often to detect location changes
     private LocationRequest mLocationRequest;
-    // Get a pointer to point to newly created markers
-    Marker marker;
+    // Get pointers to point to newly created markers
+    List<Marker> markers = new ArrayList<Marker>();
+
+    // Marker marker;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -246,9 +248,12 @@ public class MapsActivity extends FragmentActivity implements
 
     // This allows you to set a marker to a map object
     private void setMarker(String markerTitle, double latitude, double longitude) {
+
+        int numberOfMarkers = markers.size();
         // Remove any previous markers
-        if (marker != null) {
-            marker.remove();
+        for(Marker item: markers){
+            System.out.println("retrieved element: " + item);
+            item.remove();
         }
 
         // Make a new GeoCoder object
@@ -270,8 +275,6 @@ public class MapsActivity extends FragmentActivity implements
             e.printStackTrace();
         }
 
-
-
         // Create a Marker where the snippet is the location place returned by google
         MarkerOptions options = new MarkerOptions().title(markerTitle)
                 .position(new LatLng(latitude, longitude))
@@ -290,7 +293,8 @@ public class MapsActivity extends FragmentActivity implements
         // Note: Will not remove existing markers
         // Thus, assigned it to created marker reference above to remove later
         // Assign to marker to be removed in future
-        marker = mMap.addMarker(options);
+        Marker marker = mMap.addMarker(options);
+        markers.add(marker);
     }
 
     // Hide the softkeyboard from the screen
