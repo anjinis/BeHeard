@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.parse.Parse;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -19,6 +21,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+         * Parse
+         */
+        /*
+            // a new post object
+            // this would be in the view form
+            array = []; // not sure how to do in java
+            ParseObject post = new ParseObject("Post");
+            post.put("message",<textfield value>);
+            post.put("severity",<radiobutton value>);
+            post.saveInBackground();
+            // add post to array
+            array.push(post); // not sure how to do this in java
+            
+            // these are your posts
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+            query.getInBackground(array[post].get("id"), new GetCallback<ParseObject>() {
+              public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                  // get object
+                } else {
+                  // something went wrong
+                }
+              }
+            });
+
+            // these are the posts from everyone
+            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Post");
+            query.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> posts, ParseException e) {
+                    if (e == null) {
+                        // the objects
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+        */
         // intial parse setup
         setupParse();
 

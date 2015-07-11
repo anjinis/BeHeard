@@ -2,6 +2,7 @@ package chimehack.beheard;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +29,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+
+import java.util.List;
 // Classes to be able to update camera for google maps
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,6 +76,9 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+        ParseCredentials pc = new ParseCredentials();
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
 
         // Set up the GoogleApiClient to give back location data
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -199,6 +212,72 @@ public class MapsActivity extends FragmentActivity implements
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
+    private void createPost(ParseGeoPoint location,String message,int severity) {
+        ParseObject post = new ParseObject("Post");
+        post.put("message",message);
+        //ParseGeoPoint point = new ParseGeoPoint(40,40);
+        post.put("location",location);
+        post.put("sendLove",0);
+        post.put("notCool",0);
+        post.put("meToo", 0);
+        post.put("severity", severity);
+        post.saveInBackground();
+    }
+    private void getCard(String id) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.setLimit(10);
+        query.getInBackground(id ,new GetCallback<ParseObject>(){
+            public void done(ParseObject post, ParseException e) {
+                if (e == null) {
+                    Log.d("Posts", "Retrieved " + post + " scores");
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+    private void getFeed() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.setLimit(10);
+        query.findInBackground(new FindCallback<ParseObject>(){
+            public void done(List<ParseObject> postList, ParseException e) {
+                if (e == null) {
+                    Log.d("Posts", "Retrieved " + postList.size() + " scores");
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
+    // feedback can either be sendLove, notCool, or meToo
+    private void incrementFeedback(String id,final String feedback) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.getInBackground(id, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    object.increment(feedback);
+                    object.saveInBackground();
+                } else {
+                    // something went wrong
+                }
+            }
+        });
+    }
+
+    private void getNearbyPosts(ParseGeoPoint location) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.whereNear("location", location);
+        query.whereWithinMiles("location",location,3);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> postList, ParseException e) {
+                if (e == null) {
+                    Log.d("Posts", "Retrieved " + postList.size() + " scores");
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+    }
 
 
     // Set initial location with zoom of mMap programmatically
@@ -347,5 +426,6 @@ public class MapsActivity extends FragmentActivity implements
             return "I am a girl";
         }
     }
+
 
 }
