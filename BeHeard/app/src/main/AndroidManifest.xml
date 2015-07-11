@@ -28,16 +28,11 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
-<<<<<<< HEAD
-
-
-=======
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
->>>>>>> 0db6d6aa762152798fab50f5b8e8a0684798869f
         </activity>
 
         <activity
