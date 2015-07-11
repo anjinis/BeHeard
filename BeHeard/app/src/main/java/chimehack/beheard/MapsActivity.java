@@ -2,8 +2,10 @@ package chimehack.beheard;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 //-----------------------------------------------------------------
 import android.app.Dialog; // to use Dialog
@@ -28,6 +30,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 // Classes to be able to update camera for google maps
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,7 +47,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import android.os.Bundle;
 
-
 // need FragmentActivity instead of Activity since running on fragment in activity_maps.xml
 // Need implement ConnectionCallbacks and OnConnectionFailedListener to get current location
 public class MapsActivity extends FragmentActivity implements
@@ -56,8 +59,10 @@ public class MapsActivity extends FragmentActivity implements
 
     // To initialize how often to detect location changes
     private LocationRequest mLocationRequest;
-    // Get a pointer to point to newly created markers
-    Marker marker;
+    // Get pointers to point to newly created markers
+    List<Marker> markers = new ArrayList<Marker>();
+
+    // Marker marker;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -158,13 +163,9 @@ public class MapsActivity extends FragmentActivity implements
                         View v = getLayoutInflater().inflate(R.layout.info_window, null); // null means dont attach to any parent window
                         TextView tvDescription = (TextView) v.findViewById(R.id.tv_description);
                         TextView tvSnippet = (TextView) v.findViewById(R.id.tv_snippet);
-                        TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
-                        TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
 
                         // Get position of marker
                         LatLng markerPos = marker.getPosition();
-                        tvLat.setText("Latitude: " + markerPos.latitude);
-                        tvLng.setText("Longitude: " + markerPos.longitude);
                         tvSnippet.setText(marker.getSnippet());
                         // Problem: How to pass the string into this argument?
                         // Solution 1: Call a function that this function can access and that function
@@ -202,8 +203,6 @@ public class MapsActivity extends FragmentActivity implements
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
-
-
 
     // Set initial location with zoom of mMap programmatically
     // uses newLatLngZoom()
@@ -249,15 +248,37 @@ public class MapsActivity extends FragmentActivity implements
 
     // This allows you to set a marker to a map object
     private void setMarker(String markerTitle, double latitude, double longitude) {
+
+        int numberOfMarkers = markers.size();
         // Remove any previous markers
-        if (marker != null) {
-            marker.remove();
+        for(Marker item: markers){
+            System.out.println("retrieved element: " + item);
+            item.remove();
         }
 
-        // Create a Marker
+        // Make a new GeoCoder object
+        Geocoder gc = new Geocoder(this);
+        String snippetTitle = "Unknown";
+        try {
+            // Get the location name suggested from Google Maps
+            List<Address> list = gc.getFromLocation(latitude, longitude, 1);
+            Address addr = list.get(0); // Get the first element in the List
+            String address = addr.getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addr.getLocality();
+            String state = addr.getAdminArea();
+            String country = addr.getCountryName();
+            String postalCode = addr.getPostalCode();
+            String knownName = addr.getFeatureName();
+            //snippetTitle = knownName+ ", " + city + ", " + postalCode+", " + address;
+            snippetTitle = address;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Create a Marker where the snippet is the location place returned by google
         MarkerOptions options = new MarkerOptions().title(markerTitle)
                 .position(new LatLng(latitude, longitude))
-                .snippet("haha")
+                .snippet(snippetTitle)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
 
 
@@ -272,7 +293,8 @@ public class MapsActivity extends FragmentActivity implements
         // Note: Will not remove existing markers
         // Thus, assigned it to created marker reference above to remove later
         // Assign to marker to be removed in future
-        marker = mMap.addMarker(options);
+        Marker marker = mMap.addMarker(options);
+        markers.add(marker);
     }
 
     // Hide the softkeyboard from the screen
@@ -330,5 +352,6 @@ public class MapsActivity extends FragmentActivity implements
             return "I am a girl";
         }
     }
+
 
 }
