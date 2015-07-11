@@ -252,7 +252,7 @@ public class MapsActivity extends FragmentActivity implements
         Address addr = list.get(0); // Get the first element in the List
         String locality = addr.getLocality();
         // Output to user what was returned from what was typed
-        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
 
         // Get latitude and longitude values
         double latitude = addr.getLatitude();
@@ -331,22 +331,21 @@ public class MapsActivity extends FragmentActivity implements
         // Start requesting for location updates
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
-        Toast.makeText(this, "Soon: Success connect to Location Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Success connect to Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
     // When connection is unsuccessful, this method is executed
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Toast.makeText(this, "Soon: Failure connect to Location Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Failure connect to Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
     // When disconnect occurs, this method is executed
     @Override
     public void onConnectionSuspended(int cause) {
-        Toast.makeText(this, "Soon: Disconnect from Location Service", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(this, "Soon: Disconnect from Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
@@ -354,7 +353,7 @@ public class MapsActivity extends FragmentActivity implements
     // in the setInterval() method
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(this, "Soon: Latest Location is: " + location.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Latest Location is: " + location.toString(), Toast.LENGTH_SHORT).show();
         return;
     }
 
