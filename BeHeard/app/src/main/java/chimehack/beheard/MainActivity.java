@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.parse.Parse;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,13 +21,6 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Parse
          */
-        ParseCredentials pc = new ParseCredentials();
-        //Parse.enableLocalDatastore(this);
-        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());  
-        ParseObject post = new ParseObject("Post");
-        post.put("message","Hello");
-        post.put("severity",1);
-        post.saveInBackground();
         /*
             // a new post object
             // this would be in the view form
