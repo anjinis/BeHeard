@@ -1,8 +1,5 @@
 package chimehack.beheard;
 
-/**
- * Created by kevin on 7/11/15.
- */
 public class ParseCredentials {
     private String API_KEY = "SET KEY HERE";
     private String CLIENT_KEY = "SET CLIENT KEY HERE";
