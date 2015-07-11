@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
         testObject.saveInBackground();
 
         /*
-         *
+         * View Implementation
          */
+        //mFeed = (ListView)
     }
 
     @Override
