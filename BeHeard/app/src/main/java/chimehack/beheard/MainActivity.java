@@ -25,40 +25,7 @@ public class MainActivity extends AppCompatActivity {
          * Parse
          */
         /*
-            // a new post object
-            // this would be in the view form
-            array = []; // not sure how to do in java
-            ParseObject post = new ParseObject("Post");
-            post.put("message",<textfield value>);
-            post.put("severity",<radiobutton value>);
-            post.saveInBackground();
-            // add post to array
-            array.push(post); // not sure how to do this in java
-            
-            // these are your posts
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.getInBackground(array[post].get("id"), new GetCallback<ParseObject>() {
-              public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                  // get object
-                } else {
-                  // something went wrong
-                }
-              }
-            });
 
-            // these are the posts from everyone
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Post");
-            query.findInBackground(new FindCallback<ParseObject>() {
-                public void done(List<ParseObject> posts, ParseException e) {
-                    if (e == null) {
-                        // the objects
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
-        */
         // intial parse setup
         setupParse();
 
@@ -117,17 +84,4 @@ public class MainActivity extends AppCompatActivity {
         Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
     }
 
-    /**
-     * Make Post into DB
-     */
-    private void makePost(Post newPost) {
-
-    }
-
-    /**
-     * Get single Post from DB
-     */
-    private Post query() {
-        return new Post(); // return query results here
-    }
 }

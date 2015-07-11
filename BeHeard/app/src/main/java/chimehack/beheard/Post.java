@@ -1,4 +1,5 @@
 package chimehack.beheard;
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,11 +47,13 @@ import android.location.Address;
 import android.location.Geocoder;
 // To work with user location
 import android.location.Location;
+
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import android.os.Bundle;
 
 /**
@@ -60,18 +63,19 @@ public class Post {
 
     ArrayList mUserPosts = new ArrayList();
 
-    private void createPost(ParseGeoPoint location,String message,int severity) {
+    private void createPost(ParseGeoPoint location, String message, int severity) {
         ParseObject post = new ParseObject("Post");
-        post.put("message",message);
+        post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
-        post.put("location",location);
-        post.put("sendLove",0);
-        post.put("notCool",0);
+        post.put("location", location);
+        post.put("sendLove", 0);
+        post.put("notCool", 0);
         post.put("meToo", 0);
         post.put("severity", severity);
         post.saveInBackground();
         mUserPosts.add(post.getObjectId());
     }
+
     private void getUserPosts() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereContainedIn("id", mUserPosts);
@@ -85,10 +89,11 @@ public class Post {
             }
         });
     }
+
     private void getCard(String id) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
-        query.getInBackground(id ,new GetCallback<ParseObject>(){
+        query.getInBackground(id, new GetCallback<ParseObject>() {
             public void done(ParseObject post, ParseException e) {
                 if (e == null) {
                     Log.d("Posts", "Retrieved " + post + " scores");
@@ -98,10 +103,11 @@ public class Post {
             }
         });
     }
+
     private void getFeed() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
-        query.findInBackground(new FindCallback<ParseObject>(){
+        query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {
                     Log.d("Posts", "Retrieved " + postList.size() + " scores");
@@ -111,8 +117,9 @@ public class Post {
             }
         });
     }
+
     // feedback can either be sendLove, notCool, or meToo
-    private void incrementFeedback(String id,final String feedback) {
+    private void incrementFeedback(String id, final String feedback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.getInBackground(id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
@@ -129,7 +136,7 @@ public class Post {
     private void getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
-        query.whereWithinMiles("location",location,3);
+        query.whereWithinMiles("location", location, 3);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {
