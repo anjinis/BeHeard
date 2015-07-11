@@ -158,13 +158,9 @@ public class MapsActivity extends FragmentActivity implements
                         View v = getLayoutInflater().inflate(R.layout.info_window, null); // null means dont attach to any parent window
                         TextView tvDescription = (TextView) v.findViewById(R.id.tv_description);
                         TextView tvSnippet = (TextView) v.findViewById(R.id.tv_snippet);
-                        TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
-                        TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
 
                         // Get position of marker
                         LatLng markerPos = marker.getPosition();
-                        tvLat.setText("Latitude: " + markerPos.latitude);
-                        tvLng.setText("Longitude: " + markerPos.longitude);
                         tvSnippet.setText(marker.getSnippet());
                         // Problem: How to pass the string into this argument?
                         // Solution 1: Call a function that this function can access and that function
@@ -254,10 +250,31 @@ public class MapsActivity extends FragmentActivity implements
             marker.remove();
         }
 
-        // Create a Marker
+        // Make a new GeoCoder object
+        Geocoder gc = new Geocoder(this);
+        String snippetTitle = "Unknown";
+        try {
+            // Get the location name suggested from Google Maps
+            List<Address> list = gc.getFromLocation(latitude, longitude, 1);
+            Address addr = list.get(0); // Get the first element in the List
+            String address = addr.getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addr.getLocality();
+            String state = addr.getAdminArea();
+            String country = addr.getCountryName();
+            String postalCode = addr.getPostalCode();
+            String knownName = addr.getFeatureName();
+            //snippetTitle = knownName+ ", " + city + ", " + postalCode+", " + address;
+            snippetTitle = address;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        // Create a Marker where the snippet is the location place returned by google
         MarkerOptions options = new MarkerOptions().title(markerTitle)
                 .position(new LatLng(latitude, longitude))
-                .snippet("haha")
+                .snippet(snippetTitle)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
 
 
