@@ -1,9 +1,9 @@
 package chimehack.beheard;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
          * View Implementation
          */
 
-        // Action Bar
-        ActionBar actionBar = getActionBar();
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         // Maps Button
         mMapButton = (Button) findViewById(R.id.map_button);
@@ -38,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     *  Setup Parse Essentials
+     * Setup Parse Essentials
      */
     private void setupParse() {
         /*
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Get single Post from DB
      */
-    private Post query(){
+    private Post query() {
         return new Post(); // return query results here
     }
 }
