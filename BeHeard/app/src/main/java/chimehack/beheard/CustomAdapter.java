@@ -44,17 +44,17 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             }
 
             if (feedback1 != null) {
-                feedback1.setText(p[1]);
+                feedback1.setText("" + p[1] + " Send Love");
             }
 
             if (feedback2 != null) {
-                feedback2.setText(p[2]);
+                feedback2.setText("" + p[2] + " Not Cool");
             }
             if (feedback3 != null) {
-                feedback3.setText(p[3]);
+                feedback3.setText("" + p[3] + " Me Too");
             }
             if (severity != null) {
-                severity.setText(p[4]);
+                severity.setText("Severity: " + p[4]);
             }
         }
         return v;
