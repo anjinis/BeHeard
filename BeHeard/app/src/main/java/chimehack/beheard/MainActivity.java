@@ -3,9 +3,6 @@ package chimehack.beheard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,18 +11,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -38,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setupParse();
 
         Post pf = new Post();
-        pf.createPost(new ParseGeoPoint(40,45), "i need help. some guy walked into me and it felt awkward...",2);
-        pf.createPost(new ParseGeoPoint(30,45), "this is another test",0);
+        pf.createPost(new ParseGeoPoint(40, 45), "i need help. some guy walked into me and it felt awkward...", 2);
+        pf.createPost(new ParseGeoPoint(30, 45), "this is another test", 0);
         pf.getAll();
 
         pf.getCard("wdUJCnCLMy");
-        pf.getNearbyPosts(new ParseGeoPoint(40,45));
+        pf.getNearbyPosts(new ParseGeoPoint(40, 45));
 
         /*
          * View Implementation
@@ -100,23 +87,12 @@ public class MainActivity extends AppCompatActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-    
+
     /**
      * Setup Parse Essentials
      */
     private void setupParse() {
-        /*
-         * Parse
-         */
         ParseCredentials pc = new ParseCredentials();
-        //Parse.enableLocalDatastore(this);
         Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
     }
-    /**
-     * Get single Post from DB
-     */
-    private Post query(){
-        return new Post(); // return query results here
-    }
-
 }
