@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="#FFF"
     tools:context="chimehack.beheard.CreatePost">
 
     <android.support.v7.widget.Toolbar
@@ -10,44 +10,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#7B5FD2"
+        android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="#7B5FD2"
+            android:gravity="center"
+            android:text="@string/close_button_text"
+            android:textColor="#FFF"
+            android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:background="#7B5FD2"
-                android:text="X"
-                android:textColor="#FFF"
-                android:textSize="26sp" />
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/cancel_button"
+            android:layout_alignParentEnd="true"
+            android:background="#7B5FD2"
+            android:gravity="center"
+            android:text="@string/share_button_text"
+            android:textColor="#FFF"
+            android:textSize="24sp" />
 
-
-            <Button
-                android:id="@+id/next_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="#7B5FD2"
-                android:text="Next"
-                android:textColor="#FFF"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/share_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="#7B5FD2"
-                android:text="Share"
-                android:textColor="#FFF"
-                android:textSize="24sp" />
-
-        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
@@ -62,30 +50,40 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="#ADD8E6"
+            android:gravity="center"
+            android:hint="@string/user_entry_prompt"
+            android:textAlignment="center"
             android:textColor="#FFF" />
 
-        <LinearLayout
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/location_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textbox">
+
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_action_room"
+            android:contentDescription="@string/location_icon_desc" />
+
+        <EditText
+            android:id="@+id/location_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_action_room" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Include location"
-                android:textSize="21sp" />
-        </LinearLayout>
-    </RelativeLayout>
+            android:hint="@string/include_location_prompt"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textbox"
+        android:layout_below="@+id/location_layout"
         android:background="#FFF">
 
         <TextView
@@ -105,100 +103,36 @@
             android:layout_below="@+id/severityLabel"
             android:layout_margin="10dp" />
 
-        <LinearLayout
-            android:id="@+id/scale"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/scale1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/seek1"
+            android:layout_marginStart="10dp"
+            android:text="Low"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/scale2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/seek1"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_centerHorizontal="true"
+            android:text="Medium"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/scale1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:paddingRight="60dp"
-                android:text="Low"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/scale2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/scale3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="55dp"
-                android:text="High"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/scale3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/scale"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/seek1"
+            android:layout_marginEnd="10dp"
+            android:text="High"
+            android:textSize="20sp" />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingRight="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="groping" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="catcalls" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="attempted rape" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="emotional abuse" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingLeft="17dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="rape" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="sexual assault" />
-            </LinearLayout>
-        </LinearLayout>
     </RelativeLayout>
+
+
 </RelativeLayout>

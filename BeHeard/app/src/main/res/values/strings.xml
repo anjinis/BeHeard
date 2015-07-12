@@ -9,4 +9,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="create_post_desc">Create Post Button</string>
+    <string name="share_button_text">Share</string>
+    <string name="location_icon_desc">Location Icon Image</string>
+    <string name="user_entry_prompt">Tap here to start writing</string>
+    <string name="include_location_prompt">Include a Location</string>
+    <string name="close_button_text">X</string>
 </resources>
