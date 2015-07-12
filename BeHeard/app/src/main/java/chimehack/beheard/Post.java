@@ -39,6 +39,13 @@ public class Post {
         post.put("severity", severity);
         post.saveInBackground();
         mUserPosts.add(post.getObjectId());
+        public void done(ParseException e) {
+        if (e == null) {
+            String id = gameScore.getObjectId();
+        } else {
+            // the save call was not successful.
+        }
+    }
     }
     public void getUserPosts() {
 
