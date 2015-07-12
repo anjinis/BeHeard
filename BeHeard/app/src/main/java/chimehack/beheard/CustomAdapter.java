@@ -1,12 +1,14 @@
 package chimehack.beheard;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -26,7 +28,6 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         View v = convertView;
 
         if (v == null) {
@@ -51,25 +52,62 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
 
             if (feedback1 != null) {
                 feedback1.setText("" + p[1] + " Send Love");
+                final int value = (int) Integer.parseInt(p[1]);
                 feedback1.setOnClickListener(new View.OnClickListener() {
+                    int counter = value;
+                    int done = 0;
+
                     @Override
                     public void onClick(View v) {
-
+                        if (done == 0) {
+                            counter = counter + 1;
+                            Log.d("yuyu", String.valueOf(counter));
+                            Button feedback1 = (Button) v.findViewById(R.id.feedback_1);
+                            feedback1.setText("" + counter + " Send Love");
+                            done = 1;
+                        }
                     }
                 });
             }
 
             if (feedback2 != null) {
                 feedback2.setText("" + p[2] + " Not Cool");
+                final int value = (int) Integer.parseInt(p[2]);
                 feedback2.setOnClickListener(new View.OnClickListener() {
+                    int counter = value;
+                    int done = 0;
+
                     @Override
                     public void onClick(View v) {
+                        if (done == 0) {
+                            counter = counter + 1;
+                            Log.d("yuyu", String.valueOf(counter));
+                            Button feedback2 = (Button) v.findViewById(R.id.feedback_2);
+                            feedback2.setText("" + counter + " Not Cool");
+                            done = 1;
+                        }
 
                     }
                 });
             }
             if (feedback3 != null) {
                 feedback3.setText("" + p[3] + " Me Too");
+                final int value = (int) Integer.parseInt(p[3]);
+                feedback3.setOnClickListener(new View.OnClickListener() {
+                    int counter = value;
+                    int done = 0;
+
+                    @Override
+                    public void onClick(View v) {
+                        if (done == 0) {
+                            counter = counter + 1;
+                            Log.d("yuyu", String.valueOf(counter));
+                            Button feedback3 = (Button) v.findViewById(R.id.feedback_3);
+                            feedback3.setText("" + counter + " Me Too");
+                            done = 1;
+                        }
+                    }
+                });
             }
             if (severity != null) {
                 severity.setText("Severity: " + p[4]);
