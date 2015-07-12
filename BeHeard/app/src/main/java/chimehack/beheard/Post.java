@@ -30,7 +30,7 @@ public class Post {
     ArrayList mUserPosts = new ArrayList();
 
     public void createPost(ParseGeoPoint location,String message,int severity) {
-        ParseObject post = new ParseObject("Post");
+        final ParseObject post = new ParseObject("Post");
         post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
         post.put("location", location);
