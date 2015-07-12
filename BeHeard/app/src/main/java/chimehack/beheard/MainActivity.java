@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        
+
 
         // Maps Button
         mMapButton = (Button) findViewById(R.id.map_button);
