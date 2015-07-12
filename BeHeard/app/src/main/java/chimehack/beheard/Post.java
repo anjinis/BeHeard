@@ -27,19 +27,22 @@ import java.util.List;
 public class Post {
 
     ArrayList mUserPosts = new ArrayList();
+    ArrayList<String[]> localDB = new ArrayList<>();
 
-    public void createPost(ParseGeoPoint location,String message,int severity) {
+
+    public void createPost(ParseGeoPoint location, String message, int severity) {
         ParseObject post = new ParseObject("Post");
         post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
-        post.put("location",location);
+        post.put("location", location);
         post.put("sendLove", 0);
-        post.put("notCool",0);
+        post.put("notCool", 0);
         post.put("meToo", 0);
         post.put("severity", severity);
         post.saveInBackground();
         mUserPosts.add(post.getObjectId());
     }
+
     public void getUserPosts() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
@@ -54,6 +57,7 @@ public class Post {
             }
         });
     }
+
     public void getCard(String id) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
@@ -67,8 +71,8 @@ public class Post {
             }
         });
     }
-    public void getFeed() {
 
+    public void getFeed() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -80,11 +84,10 @@ public class Post {
                 }
             }
         });
-
     }
 
     // feedback can either be sendLove, notCool, or meToo
-    public void incrementFeedback(String id,final String feedback) {
+    public void incrementFeedback(String id, final String feedback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.getInBackground(id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
@@ -97,6 +100,7 @@ public class Post {
             }
         });
     }
+
     public void getAll() {
         ParseQuery query = ParseQuery.getQuery("Post");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -113,6 +117,7 @@ public class Post {
             }
         });
     }
+
     public void getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
@@ -130,5 +135,30 @@ public class Post {
                 }
             }
         });
+    }
+
+    public ArrayList<String[]> getFeedPosts() {
+
+        ParseQuery query = ParseQuery.getQuery("Post");
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> postList, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < postList.size(); i++) {
+                        Log.i("Post #" + (i + 1), postList.get(i).getString("message"));
+                        String[] eachPost = new String[5];
+                        eachPost[0] = postList.get(i).getString("message");
+                        eachPost[1] = "" + postList.get(i).getInt("sendLove");
+                        eachPost[2] = "" + postList.get(i).getInt("notCool");
+                        eachPost[3] = "" + postList.get(i).getInt("meToo");
+                        eachPost[4] = "" + postList.get(i).getInt("severity");
+                        localDB.add(eachPost);
+                    }
+                } else {
+                    Log.e("FATAL", e.getMessage());
+                }
+            }
+        });
+        return localDB;
     }
 }

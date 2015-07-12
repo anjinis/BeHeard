@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.Parse;
-import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQueryAdapter;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -25,12 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setupParse();
 
         Post pf = new Post();
-        pf.createPost(new ParseGeoPoint(40, 45), "i need help. some guy walked into me and it felt awkward...", 2);
-        pf.createPost(new ParseGeoPoint(30, 45), "this is another test", 0);
-        pf.getAll();
-
-        pf.getCard("wdUJCnCLMy");
-        pf.getNearbyPosts(new ParseGeoPoint(40, 45));
+//        pf.createPost(new ParseGeoPoint(38,-122), "Point 1", 0);
+//        pf.createPost(new ParseGeoPoint(38.05,-122.05), "Point 2", 0);
+//        pf.createPost(new ParseGeoPoint(38.04,-122.04), "Point 3", 0);
+//        pf.createPost(new ParseGeoPoint(38.03,-122.03), "Point 4", 0);
+//        pf.createPost(new ParseGeoPoint(38.02,-122.02), "Point 4", 0);
 
         /*
          * View Implementation
@@ -53,18 +51,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // ListView
-        final ListView feed = (ListView) findViewById(R.id.list);
-        String[] testMessages = {"I was offended.", "I was attacked."};
-        ListAdapter adapter = new FeedAdapter(this, testMessages);
-        feed.setAdapter(adapter);
-
-        feed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        ListView feed = (ListView) findViewById(R.id.list);
+        ListAdapter customAdapter = new CustomAdapter(this, R.layout.row_layout, pf.getFeedPosts());
+        feed.setAdapter(customAdapter);
     }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
