@@ -9,16 +9,61 @@
     tools:context="chimehack.beheard.CreatePost"
     android:background="#000">
 
-    <ImageView
-        android:id="@+id/sendlove"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/sendlove"/>
+        android:background="#7B5FD2"
+        android:minHeight="?attr/actionBarSize">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/metoo_3x"
-        android:layout_below="@id/sendlove"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:background="#7B5FD2"
+                android:text="X"
+                android:textSize="26sp"
+                android:textColor="#FFF"
+                android:layout_alignParentLeft="true"/>
+
+
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textSize="24sp"
+                android:background="#7B5FD2"
+                android:textColor="#FFF"
+                android:layout_alignParentEnd="true"/>
+
+            <Button
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:textSize="24sp"
+                android:background="#7B5FD2"
+                android:textColor="#FFF"
+                android:layout_alignParentEnd="true"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+        <EditText
+            android:id="@+id/myRectangleView"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:background="#FFF"/>
+    </RelativeLayout>
 </RelativeLayout>

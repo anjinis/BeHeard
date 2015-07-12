@@ -8,6 +8,9 @@
         android:id="@+id/imageView1"
         android:layout_width="100dp"
         android:layout_height="100dp" />
+                    android:text="Kevin is a Dick! He just called my friend a Small Pee "
+            android:text="Twitter Headquarter "
+
         -->
     <LinearLayout
         android:layout_width="wrap_content"

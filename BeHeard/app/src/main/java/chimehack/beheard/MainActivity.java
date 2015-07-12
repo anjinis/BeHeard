@@ -21,14 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //
         setupParse();
 
         Post pf = new Post();
-//        pf.createPost(new ParseGeoPoint(38,-122), "Point 1", 0);
-//        pf.createPost(new ParseGeoPoint(38.05,-122.05), "Point 2", 0);
-//        pf.createPost(new ParseGeoPoint(38.04,-122.04), "Point 3", 0);
-//        pf.createPost(new ParseGeoPoint(38.03,-122.03), "Point 4", 0);
-//        pf.createPost(new ParseGeoPoint(38.02,-122.02), "Point 4", 0);
 
         /*
          * View Implementation

@@ -8,6 +8,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,8 @@ public class Post {
     ArrayList mUserPosts = new ArrayList();
     ArrayList<String[]> localDB = new ArrayList<>();
 
-
     public void createPost(ParseGeoPoint location, String message, int severity) {
-        ParseObject post = new ParseObject("Post");
+        final ParseObject post = new ParseObject("Post");
         post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
         post.put("location", location);
@@ -39,8 +39,18 @@ public class Post {
         post.put("notCool", 0);
         post.put("meToo", 0);
         post.put("severity", severity);
-        post.saveInBackground();
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    String id = post.getObjectId();
+                } else {
+                    // the save call was not successful.
+                }
+            }
+        });
         mUserPosts.add(post.getObjectId());
+
     }
 
     public void getUserPosts() {
@@ -71,7 +81,6 @@ public class Post {
             }
         });
     }
-
     public void getFeed() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
@@ -117,8 +126,7 @@ public class Post {
             }
         });
     }
-
-    public void getNearbyPosts(ParseGeoPoint location) {
+    public ParseQuery<ParseObject> getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
         query.whereWithinMiles("location", location, 3);
@@ -135,6 +143,8 @@ public class Post {
                 }
             }
         });
+        return query;
+
     }
 
     public ArrayList<String[]> getFeedPosts() {
