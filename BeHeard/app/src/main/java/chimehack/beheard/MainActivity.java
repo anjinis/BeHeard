@@ -2,7 +2,6 @@ package chimehack.beheard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,11 +11,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mCreatePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, CreatePost.class);
+                Intent i = new Intent(MainActivity.this, CreatePostActivity.class);
                 startActivity(i);
             }
         });

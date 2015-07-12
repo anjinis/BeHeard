@@ -13,7 +13,7 @@ import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 
-public class CreatePost extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
     Button mCreateButton;
     Button mCancelButton;
     EditText mMessage;
