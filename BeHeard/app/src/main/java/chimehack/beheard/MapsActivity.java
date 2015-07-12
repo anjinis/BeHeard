@@ -174,7 +174,8 @@ public class MapsActivity extends FragmentActivity implements
                             ParseObject curr = postList.get(i);
                             String description = curr.getString("message");
                             ParseGeoPoint location = curr.getParseGeoPoint("location");
-                            setMarker(description, location.getLatitude(), location.getLongitude(), i);
+                            int severity = (int) curr.getNumber("severity");
+                            setMarker(description, location.getLatitude(), location.getLongitude(), severity);
                             //Log.d("BABABA", temp);
                     }
                 } else {
@@ -290,8 +291,8 @@ public class MapsActivity extends FragmentActivity implements
                                         ParseObject curr = postList.get(i);
                                         String description = curr.getString("message");
                                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
-                                        //Log.d("BABABA", temp);
+                                        int severity = (int) curr.getNumber("severity");
+                                        setMarker(description, location.getLatitude(), location.getLongitude(), severity);                                        //Log.d("BABABA", temp);
                                     }
                                 } else {
                                     //Log.d("score", "Error: " + e.getMessage());
@@ -324,8 +325,8 @@ public class MapsActivity extends FragmentActivity implements
                                         ParseObject curr = postList.get(i);
                                         String description = curr.getString("message");
                                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
-                                        //Log.d("BABABA", temp);
+                                        int severity = (int) curr.getNumber("severity");
+                                        setMarker(description, location.getLatitude(), location.getLongitude(), severity);                                        //Log.d("BABABA", temp);
                                     }
                                 } else {
                                     //Log.d("score", "Error: " + e.getMessage());
@@ -422,7 +423,7 @@ public class MapsActivity extends FragmentActivity implements
             String country = addr.getCountryName();
             String postalCode = addr.getPostalCode();
             String knownName = addr.getFeatureName();
-            String snippetTitle = address; 
+            String snippetTitle = address;
 
             MarkerOptions options;
             if (severity >= 4) {
