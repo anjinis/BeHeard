@@ -48,6 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreatePost"
+            android:label="@string/title_activity_create_post" >
+        </activity>
     </application>
 
 </manifest>

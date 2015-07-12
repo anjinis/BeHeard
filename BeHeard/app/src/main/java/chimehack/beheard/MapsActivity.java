@@ -196,10 +196,10 @@ public class MapsActivity extends FragmentActivity implements
                     }
                 });
                 setUpMap();
-                // Add the My Location button to the map
+                // Add the My Location not_button to the map
                 // which moves camera position to show user's current location
                 // Method of finding the location is hidden from developer by Google
-                // You will notice a small button on the right corner of the map,
+                // You will notice a small not_button on the right corner of the map,
                 // Touch that and it will bring you to your location on the map.
                 // Note: Will use more battery when this is pressed
                 // cause will keep using power to use GPS

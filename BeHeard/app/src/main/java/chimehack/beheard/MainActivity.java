@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
+//        // automatically handle clicks on the Home/Up not_button, so long
 //        // as you specify a parent activity in AndroidManifest.xml.
 //        int id = item.getItemId();
 //
@@ -78,17 +77,5 @@ public class MainActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 
-
-    /**
-     * Setup Parse Essentials
-     */
-    private void setupParse() {
-        /*
-         * Parse
-         */
-        ParseCredentials pc = new ParseCredentials();
-        //Parse.enableLocalDatastore(this);
-        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
-    }
 
 }
