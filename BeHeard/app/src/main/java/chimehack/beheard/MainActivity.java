@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button mMapButton;
     Button mCreatePostButton;
     ListView mFeed;
+    Button mRefreshButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, CreatePostActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // Refresh Button
+        mRefreshButton = (Button) findViewById(R.id.refresh_button);
+        mRefreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });

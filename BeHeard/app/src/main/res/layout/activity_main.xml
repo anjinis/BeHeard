@@ -16,21 +16,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignBottom="@id/toolbar"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@id/toolbar">
+        android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/create_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:background="#7B5FD2"
             android:gravity="center"
             android:text="+"
             android:textColor="#FFF"
-            android:textSize="28sp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:textSize="28sp" />
 
         <Button
             android:id="@+id/map_button"
@@ -54,7 +54,15 @@
             android:text="@string/feed_button_text"
             android:textColor="#7B5FD2" />
 
-
+        <Button
+            android:id="@+id/refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#7B5FD2"
+            android:text="Refresh"
+            android:textColor="#FFF"
+            android:layout_centerVertical="true"
+            android:gravity="center"/>
 
 
     </RelativeLayout>
