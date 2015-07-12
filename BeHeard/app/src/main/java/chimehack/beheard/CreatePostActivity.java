@@ -1,6 +1,8 @@
 package chimehack.beheard;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +16,8 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
+
+import java.util.List;
 
 
 public class CreatePostActivity extends AppCompatActivity {
@@ -61,13 +65,34 @@ public class CreatePostActivity extends AppCompatActivity {
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: translate location text to LONG/LAT and pass as PARSE GEOPOINT
                 if (mMessage.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Empty Message", Toast.LENGTH_SHORT).show();
                 } else {
-                    createPost(new ParseGeoPoint(37.7763, -122.417), mMessage.getText().toString(), mSeverityVal);
-                    Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
-                    startActivity(i);
+
+                    // Get location from user
+                    String location = mLocation.getText().toString();
+
+                    // Initialize Geocoder and search
+                    Geocoder gc = new Geocoder(getApplicationContext());
+                    // Get only 1 address from the function
+                    // note: May throw IO Exception
+                    try {
+                        List<Address> list = gc.getFromLocationName(location, 1);
+                        Address addr = list.get(0); // Get the first element in the List
+                        // Get latitude and longitude values
+                        double latitude = addr.getLatitude();
+                        double longitude = addr.getLongitude();
+
+                        createPost(new ParseGeoPoint(latitude, longitude), mMessage.getText().toString(), mSeverityVal);
+                        Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Can't get coordinates based on location entered", Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
             }
         });
