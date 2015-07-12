@@ -53,6 +53,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             if (feedback1 != null) {
                 feedback1.setText("" + p[1] + " Send Love");
                 final int value = (int) Integer.parseInt(p[1]);
+                final String id = p[5];
+
                 feedback1.setOnClickListener(new View.OnClickListener() {
                     int counter = value;
                     int done = 0;
@@ -65,6 +67,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             Button feedback1 = (Button) v.findViewById(R.id.feedback_1);
                             feedback1.setText("" + counter + " Send Love");
                             done = 1;
+                            Log.d("ytr", id);
+
                         }
                     }
                 });
@@ -73,6 +77,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             if (feedback2 != null) {
                 feedback2.setText("" + p[2] + " Not Cool");
                 final int value = (int) Integer.parseInt(p[2]);
+                final String id = p[5];
+
                 feedback2.setOnClickListener(new View.OnClickListener() {
                     int counter = value;
                     int done = 0;
@@ -85,6 +91,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             Button feedback2 = (Button) v.findViewById(R.id.feedback_2);
                             feedback2.setText("" + counter + " Not Cool");
                             done = 1;
+                            Log.d("ytr", id);
+
                         }
 
                     }
@@ -93,6 +101,7 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             if (feedback3 != null) {
                 feedback3.setText("" + p[3] + " Me Too");
                 final int value = (int) Integer.parseInt(p[3]);
+                final String id = p[5];
                 feedback3.setOnClickListener(new View.OnClickListener() {
                     int counter = value;
                     int done = 0;
@@ -105,6 +114,7 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             Button feedback3 = (Button) v.findViewById(R.id.feedback_3);
                             feedback3.setText("" + counter + " Me Too");
                             done = 1;
+                            Log.d("ytr", id);
                         }
                     }
                 });

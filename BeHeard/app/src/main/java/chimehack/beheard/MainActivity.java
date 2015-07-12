@@ -69,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     for (int i = 0; i < postList.size(); i++) {
                         Log.i("Post #" + (i + 1), postList.get(i).getString("message"));
-                        String[] eachPost = new String[5];
+                        String[] eachPost = new String[6];
                         eachPost[0] = postList.get(i).getString("message");
                         eachPost[1] = "" + postList.get(i).getInt("sendLove");
                         eachPost[2] = "" + postList.get(i).getInt("notCool");
                         eachPost[3] = "" + postList.get(i).getInt("meToo");
                         eachPost[4] = "" + postList.get(i).getInt("severity");
+                        eachPost[5] = postList.get(i).getObjectId();
                         localDB.add(0, eachPost);
                     }
                 } else {
