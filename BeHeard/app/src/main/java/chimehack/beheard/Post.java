@@ -1,60 +1,25 @@
 package chimehack.beheard;
 
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.util.Log;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-//-----------------------------------------------------------------
-import android.app.Dialog; // to use Dialog
-import android.support.v4.app.FragmentActivity;
-// To open menu and right-click menu items on top of screen
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-//-----------------------------------------------------------------
-// Google Maps core classes
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-// Lattitude and Longitude for google maps
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseQuery;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
+
+//-----------------------------------------------------------------
+// To open menu and right-click menu items on top of screen
+//-----------------------------------------------------------------
+// Google Maps core classes
+// Lattitude and Longitude for google maps
 // Classes to be able to update camera for google maps
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 // To give location to a given text address
-import android.location.Address;
-import android.location.Geocoder;
 // To work with user location
-import android.location.Location;
-
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
-import android.os.Bundle;
 
 /**
  * Created by kevin on 7/11/15.
