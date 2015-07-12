@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         eachPost[2] = "" + postList.get(i).getInt("notCool");
                         eachPost[3] = "" + postList.get(i).getInt("meToo");
                         eachPost[4] = "" + postList.get(i).getInt("severity");
-                        eachPost[5] = postList.get(i).getObjectId().toString();
-                        Log.d("WHAT IS ID?", eachPost[5]);
+                        eachPost[5] = postList.get(i).getObjectId();
                         localDB.add(0, eachPost);
                     }
                 } else {
