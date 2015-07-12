@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    tools:context="chimehack.beheard.CreatePostActivity">
+    tools:context="chimehack.beheard.CreatePostActivity"
+    android:isScrollContainer="false" >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
