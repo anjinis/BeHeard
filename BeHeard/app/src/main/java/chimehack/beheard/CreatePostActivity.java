@@ -70,7 +70,8 @@ public class CreatePostActivity extends AppCompatActivity {
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
     }
