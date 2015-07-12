@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  message: MyText
+  lat: 1.5
+  long: 1.5
+  severity: 1
+  rating: 1
+
+two:
+  message: MyText
+  lat: 1.5
+  long: 1.5
+  severity: 1
+  rating: 1

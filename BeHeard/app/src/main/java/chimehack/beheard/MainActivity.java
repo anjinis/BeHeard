@@ -4,14 +4,24 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -21,48 +31,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-         * Parse
-         */
-        /*
-            // a new post object
-            // this would be in the view form
-            array = []; // not sure how to do in java
-            ParseObject post = new ParseObject("Post");
-            post.put("message",<textfield value>);
-            post.put("severity",<radiobutton value>);
-            post.saveInBackground();
-            // add post to array
-            array.push(post); // not sure how to do this in java
-            
-            // these are your posts
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.getInBackground(array[post].get("id"), new GetCallback<ParseObject>() {
-              public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                  // get object
-                } else {
-                  // something went wrong
-                }
-              }
-            });
-
-            // these are the posts from everyone
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Post");
-            query.findInBackground(new FindCallback<ParseObject>() {
-                public void done(List<ParseObject> posts, ParseException e) {
-                    if (e == null) {
-                        // the objects
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
-        */
-        // intial parse setup
         setupParse();
 
-        /*
+        Post pf = new Post();
+        pf.createPost(new ParseGeoPoint(40,45), "i need help. some guy walked into me and it felt awkward...",2);
+        pf.createPost(new ParseGeoPoint(30,45), "this is another test",0);
+        pf.getAll();
+
+        pf.getCard("wdUJCnCLMy");
+        pf.getNearbyPosts(new ParseGeoPoint(40,45));
+
+         /*
          * View Implementation
          */
 
@@ -130,4 +109,6 @@ public class MainActivity extends AppCompatActivity {
     private Post query(){
         return new Post(); // return query results here
     }
+
+
 }

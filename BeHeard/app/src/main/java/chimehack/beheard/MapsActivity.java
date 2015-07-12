@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 //-----------------------------------------------------------------
 import android.app.Dialog; // to use Dialog
@@ -44,6 +45,14 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import android.os.Bundle;
 
 
@@ -76,12 +85,19 @@ public class MapsActivity extends FragmentActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        ParseCredentials pc = new ParseCredentials();
+        //Parse.enableLocalDatastore(this);
+        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
+        // parse
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect(); // connect the GoogleApiClient object
+
     }
 
     @Override
@@ -348,6 +364,5 @@ public class MapsActivity extends FragmentActivity implements
             return "I am a girl";
         }
     }
-
 
 }
