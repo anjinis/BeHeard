@@ -4,15 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.Parse;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -44,7 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         // ListView
         final ListView feed = (ListView) findViewById(R.id.list);
-        String[] posts = {}
+        String[] testMessages = {"I was offended.", "I was attacked."};
+        ListAdapter adapter = new FeedAdapter(this, testMessages);
+        feed.setAdapter(adapter);
+
+        feed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
