@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ListView
 
+        // TODO: get latest query
         ParseQuery query = ParseQuery.getQuery("Post");
 
         query.findInBackground(new FindCallback<ParseObject>() {

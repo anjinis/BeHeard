@@ -30,6 +30,7 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             v = vi.inflate(R.layout.row_layout, null);
         }
 
+        // TODO: increment feedback with buttons
         String[] p = getItem(position);
 
         if (p != null) {
