@@ -1,4 +1,5 @@
 package chimehack.beheard;
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,11 +47,13 @@ import android.location.Address;
 import android.location.Geocoder;
 // To work with user location
 import android.location.Location;
+
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import android.os.Bundle;
 
 /**
@@ -62,7 +65,7 @@ public class Post {
 
     public void createPost(ParseGeoPoint location,String message,int severity) {
         ParseObject post = new ParseObject("Post");
-        post.put("message",message);
+        post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
         post.put("location",location);
         post.put("sendLove", 0);
@@ -73,6 +76,7 @@ public class Post {
         mUserPosts.add(post.getObjectId());
     }
     public void getUserPosts() {
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereContainedIn("id", mUserPosts);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -99,6 +103,7 @@ public class Post {
         });
     }
     public void getFeed() {
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -112,6 +117,7 @@ public class Post {
         });
 
     }
+
     // feedback can either be sendLove, notCool, or meToo
     public void incrementFeedback(String id,final String feedback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
@@ -145,7 +151,7 @@ public class Post {
     public void getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
-        query.whereWithinMiles("location",location,3);
+        query.whereWithinMiles("location", location, 3);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {

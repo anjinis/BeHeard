@@ -55,21 +55,21 @@ import com.parse.ParseQuery;
 
 import android.os.Bundle;
 
-
 // need FragmentActivity instead of Activity since running on fragment in activity_maps.xml
 // Need implement ConnectionCallbacks and OnConnectionFailedListener to get current location
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static final float initialZoom = 15;
 
     // To initialize how often to detect location changes
     private LocationRequest mLocationRequest;
-    // Get a pointer to point to newly created markers
-    Marker marker;
+    // Get pointers to point to newly created markers
+    List<Marker> markers = new ArrayList<Marker>();
+
+    // Marker marker;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -193,11 +193,28 @@ public class MapsActivity extends FragmentActivity implements
                         return v;
                     }
                 });
+
+                // This function is called each time a position on map is clicked
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    // It will pass in the latLng object of location that was clicked
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        setMarker("Hey", latLng.latitude, latLng.longitude);
+                    }
+                });
+
+
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                        resetMarker();
+                    }
+                });
                 setUpMap();
-                // Add the My Location button to the map
+                // Add the My Location not_button to the map
                 // which moves camera position to show user's current location
                 // Method of finding the location is hidden from developer by Google
-                // You will notice a small button on the right corner of the map,
+                // You will notice a small not_button on the right corner of the map,
                 // Touch that and it will bring you to your location on the map.
                 // Note: Will use more battery when this is pressed
                 // cause will keep using power to use GPS
@@ -250,7 +267,7 @@ public class MapsActivity extends FragmentActivity implements
         Address addr = list.get(0); // Get the first element in the List
         String locality = addr.getLocality();
         // Output to user what was returned from what was typed
-        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
 
         // Get latitude and longitude values
         double latitude = addr.getLatitude();
@@ -260,13 +277,18 @@ public class MapsActivity extends FragmentActivity implements
         gotoLocation(latitude, longitude, initialZoom);
     }
 
+    // This removes all current markers on the map
+    private void resetMarker() {
+        int numberOfMarkers = markers.size();
+        // Remove any previous markers
+        for(Marker item: markers){
+            System.out.println("retrieved element: " + item);
+            item.remove();
+        }
+    }
+
     // This allows you to set a marker to a map object
     private void setMarker(String markerTitle, double latitude, double longitude) {
-        // Remove any previous markers
-        if (marker != null) {
-            marker.remove();
-        }
-
         // Make a new GeoCoder object
         Geocoder gc = new Geocoder(this);
         String snippetTitle = "Unknown";
@@ -286,14 +308,11 @@ public class MapsActivity extends FragmentActivity implements
             e.printStackTrace();
         }
 
-
-
         // Create a Marker where the snippet is the location place returned by google
         MarkerOptions options = new MarkerOptions().title(markerTitle)
                 .position(new LatLng(latitude, longitude))
                 .snippet(snippetTitle)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
-
 
         // For default graphics for marker, use this
         //MarkerOptions options = new MarkerOptions().title(markerTitle)
@@ -306,7 +325,8 @@ public class MapsActivity extends FragmentActivity implements
         // Note: Will not remove existing markers
         // Thus, assigned it to created marker reference above to remove later
         // Assign to marker to be removed in future
-        marker = mMap.addMarker(options);
+        Marker marker = mMap.addMarker(options);
+        markers.add(marker);
     }
 
     // Hide the softkeyboard from the screen
@@ -326,22 +346,21 @@ public class MapsActivity extends FragmentActivity implements
         // Start requesting for location updates
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
-        Toast.makeText(this, "Soon: Success connect to Location Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Success connect to Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
     // When connection is unsuccessful, this method is executed
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Toast.makeText(this, "Soon: Failure connect to Location Service", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Failure connect to Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
     // When disconnect occurs, this method is executed
     @Override
     public void onConnectionSuspended(int cause) {
-        Toast.makeText(this, "Soon: Disconnect from Location Service", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(this, "Soon: Disconnect from Location Service", Toast.LENGTH_SHORT).show();
         return;
     }
 
@@ -349,7 +368,7 @@ public class MapsActivity extends FragmentActivity implements
     // in the setInterval() method
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(this, "Soon: Latest Location is: " + location.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Soon: Latest Location is: " + location.toString(), Toast.LENGTH_SHORT).show();
         return;
     }
 
