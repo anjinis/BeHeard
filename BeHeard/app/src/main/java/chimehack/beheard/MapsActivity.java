@@ -163,7 +163,8 @@ public class MapsActivity extends FragmentActivity implements
                         ParseObject curr = postList.get(i);
                         String description = curr.getString("message");
                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                        setMarker(description, location.getLatitude(), location.getLongitude());
+                        // TODO: Change severity
+                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
                         //Log.d("BABABA", temp);
                     }
                 } else {
@@ -252,10 +253,8 @@ public class MapsActivity extends FragmentActivity implements
                     public void onMapClick(LatLng latLng) {
                         //setMarker("Hey", latLng.latitude, latLng.longitude);
                         ParseGeoPoint location = new ParseGeoPoint(latLng.latitude,latLng.longitude);
-
                         //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
                         //Log.d("SOOOON", "ONE");
-
 
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
                         query.whereNear("location", location);
@@ -269,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements
                                         ParseObject curr = postList.get(i);
                                         String description = curr.getString("message");
                                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                                        setMarker(description, location.getLatitude(), location.getLongitude());
+                                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
                                         //Log.d("BABABA", temp);
                                     }
                                 } else {
@@ -304,7 +303,7 @@ public class MapsActivity extends FragmentActivity implements
                                         ParseObject curr = postList.get(i);
                                         String description = curr.getString("message");
                                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                                        setMarker(description, location.getLatitude(), location.getLongitude());
+                                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
                                         //Log.d("BABABA", temp);
                                     }
                                 } else {
@@ -396,7 +395,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     // This allows you to set a marker to a map object
-    private void setMarker(String description, double latitude, double longitude) {
+    private void setMarker(String description, double latitude, double longitude, int severity) {
         // Make a new GeoCoder object
         Geocoder gc = new Geocoder(this);
         String snippetTitle = "Unknown";
@@ -416,12 +415,34 @@ public class MapsActivity extends FragmentActivity implements
             e.printStackTrace();
         }
 
-        // Create a Marker where the snippet is the location place returned by google
-        MarkerOptions options = new MarkerOptions().title(description)
-                .position(new LatLng(latitude, longitude))
-                .snippet(snippetTitle)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
 
+        // Create a Marker where the snippet is the location place returned by google
+        //MarkerOptions options = new MarkerOptions().title(description)
+        //        .position(new LatLng(latitude, longitude))
+        //        .snippet(snippetTitle)
+        //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
+
+        MarkerOptions options;
+        if (severity >= 3) {
+            // For customize graphics for marker, use this
+            options = new MarkerOptions().title(description)
+                    .position(new LatLng(latitude, longitude))
+                    .snippet(snippetTitle)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.red)); // color the marker to orange
+        }
+
+        else if (severity >=2) {
+            options = new MarkerOptions().title(description)
+                    .position(new LatLng(latitude, longitude))
+                    .snippet(snippetTitle)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.orange)); // color the marker to orange
+        }
+        else {
+            options = new MarkerOptions().title(description)
+                    .position(new LatLng(latitude, longitude))
+                    .snippet(snippetTitle)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow)); // color the marker to orange
+        }
         // For default graphics for marker, use this
         //MarkerOptions options = new MarkerOptions().title(markerTitle)
         //        .position(new LatLng(latitude, longitude))
