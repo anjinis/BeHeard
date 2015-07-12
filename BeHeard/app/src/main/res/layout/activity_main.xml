@@ -13,6 +13,52 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/toolbar">
+
+        <Button
+            android:id="@+id/create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#7B5FD2"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="#FFF"
+            android:textSize="28sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/create_button"
+            android:background="@drawable/not_button"
+            android:gravity="center"
+            android:text="@string/map_button_text"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/feed_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/map_button"
+            android:layout_toStartOf="@id/map_button"
+            android:background="@drawable/selected_button"
+            android:gravity="center"
+            android:text="@string/feed_button_text"
+            android:textColor="#7B5FD2" />
+
+
+
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -20,49 +66,5 @@
         android:layout_below="@id/toolbar">
 
     </ListView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/list">
-
-        <Button
-            android:id="@+id/feed_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/map_button"
-            android:layout_toStartOf="@+id/map_button"
-            android:background="@drawable/selected_button"
-            android:gravity="center"
-            android:text="@string/feed_button_text"
-            android:textColor="#7B5FD2" />
-
-        <Button
-            android:id="@+id/map_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/create_button"
-            android:background="@drawable/not_button"
-            android:gravity="center"
-            android:text="@string/map_button_text"
-            android:textColor="#FFF" />
-
-        <Button
-            android:id="@+id/create_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/map_button"
-            android:layout_centerVertical="true"
-            android:background="#7B5FD2"
-            android:gravity="center"
-            android:text="+"
-            android:textColor="#FFF"
-            android:textSize="28sp" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

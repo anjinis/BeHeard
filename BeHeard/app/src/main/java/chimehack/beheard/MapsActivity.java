@@ -1,5 +1,6 @@
 package chimehack.beheard;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +74,9 @@ public class MapsActivity extends FragmentActivity implements
     // Get pointers to point to newly created markers
     List<Marker> markers = new ArrayList<Marker>();
 
+    // Nav Button
+    Button mFeedButton;
+
     // Marker marker;
 
     private GoogleApiClient mGoogleApiClient;
@@ -89,6 +94,16 @@ public class MapsActivity extends FragmentActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        // Button
+        mFeedButton = (Button) findViewById(R.id.feed_button);
+        mFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MapsActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         /*
         // Add in Parse

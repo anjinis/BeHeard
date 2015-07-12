@@ -2,6 +2,7 @@ package chimehack.beheard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,7 +15,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    Button mFeedButton;
     Button mMapButton;
     Button mCreatePostButton;
 
@@ -22,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //
-        setupParse();
-
-        Post pf = new Post();
 
         /*
          * View Implementation
@@ -36,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
 
         // Maps Button
@@ -59,12 +53,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Post pf = new Post();
+        
         // ListView
         ListView feed = (ListView) findViewById(R.id.list);
         ListAdapter customAdapter = new CustomAdapter(this, R.layout.row_layout, pf.getFeedPosts());
         feed.setAdapter(customAdapter);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,12 +88,4 @@ public class MainActivity extends AppCompatActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-
-    /**
-     * Setup Parse Essentials
-     */
-    private void setupParse() {
-        ParseCredentials pc = new ParseCredentials();
-        Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
-    }
 }
