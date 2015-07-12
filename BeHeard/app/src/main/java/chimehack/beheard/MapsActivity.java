@@ -438,7 +438,7 @@ public class MapsActivity extends FragmentActivity implements
         //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
 
         MarkerOptions options;
-        if (severity >= 3) {
+        if (severity >= 4) {
             // For customize graphics for marker, use this
             options = new MarkerOptions().title(description)
                     .position(new LatLng(latitude, longitude))

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         eachPost[2] = "" + postList.get(i).getInt("notCool");
                         eachPost[3] = "" + postList.get(i).getInt("meToo");
                         eachPost[4] = "" + postList.get(i).getInt("severity");
-                        localDB.add(eachPost);
+                        localDB.add(0, eachPost);
                     }
                 } else {
                     Log.e("FATAL", e.getMessage());
