@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseGeoPoint;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
@@ -21,6 +21,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setupParse();
+
+        Post pf = new Post();
+        pf.createPost(new ParseGeoPoint(40, 45), "i need help. some guy walked into me and it felt awkward...", 2);
+        pf.createPost(new ParseGeoPoint(30, 45), "this is another test", 0);
+        pf.getAll();
+
+        pf.getCard("wdUJCnCLMy");
+        pf.getNearbyPosts(new ParseGeoPoint(40, 45));
 
         /*
          * View Implementation
@@ -66,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
+//        // automatically handle clicks on the Home/Up not_button, so long
 //        // as you specify a parent activity in AndroidManifest.xml.
 //        int id = item.getItemId();
 //
@@ -78,17 +88,11 @@ public class MainActivity extends AppCompatActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 
-
     /**
      * Setup Parse Essentials
      */
     private void setupParse() {
-        /*
-         * Parse
-         */
         ParseCredentials pc = new ParseCredentials();
-        //Parse.enableLocalDatastore(this);
         Parse.initialize(this, pc.getAPI_KEY(), pc.getCLIENT_KEY());
     }
-
 }

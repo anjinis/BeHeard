@@ -5,4 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="map_button_text">Nearby</string>
     <string name="feed_button_text">Latest</string>
+    <string name="title_activity_create_post">CreatePost</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="create_post_desc">Create Post Button</string>
 </resources>

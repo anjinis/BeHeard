@@ -63,34 +63,33 @@ public class Post {
 
     ArrayList mUserPosts = new ArrayList();
 
-    private void createPost(ParseGeoPoint location, String message, int severity) {
+    public void createPost(ParseGeoPoint location,String message,int severity) {
         ParseObject post = new ParseObject("Post");
         post.put("message", message);
         //ParseGeoPoint point = new ParseGeoPoint(40,40);
-        post.put("location", location);
+        post.put("location",location);
         post.put("sendLove", 0);
-        post.put("notCool", 0);
+        post.put("notCool",0);
         post.put("meToo", 0);
         post.put("severity", severity);
         post.saveInBackground();
         mUserPosts.add(post.getObjectId());
     }
+    public void getUserPosts() {
 
-    private void getUserPosts() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereContainedIn("id", mUserPosts);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {
-                    Log.d("Posts", "Retrieved " + postList.size() + " scores");
+                    //Log.d("Posts", postList);
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
                 }
             }
         });
     }
-
-    private void getCard(String id) {
+    public void getCard(String id) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
         query.getInBackground(id, new GetCallback<ParseObject>() {
@@ -103,8 +102,8 @@ public class Post {
             }
         });
     }
+    public void getFeed() {
 
-    private void getFeed() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -116,10 +115,11 @@ public class Post {
                 }
             }
         });
+
     }
 
     // feedback can either be sendLove, notCool, or meToo
-    private void incrementFeedback(String id, final String feedback) {
+    public void incrementFeedback(String id,final String feedback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.getInBackground(id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
@@ -132,20 +132,38 @@ public class Post {
             }
         });
     }
+    public void getAll() {
+        ParseQuery query = ParseQuery.getQuery("Post");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> postList, ParseException e) {
+                if (e == null) {
+                    //Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                    for (int i = 0; i < postList.size(); i++) {
+                        Log.d("Post #" + i, postList.get(i).getString("message").toString());
+                    }
+                } else {
+                    //Log.d("score", "Error: " + e.getMessage());
 
-    private void getNearbyPosts(ParseGeoPoint location) {
+                }
+            }
+        });
+    }
+    public void getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
         query.whereWithinMiles("location", location, 3);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {
-                    Log.d("Posts", "Retrieved " + postList.size() + " scores");
+                    //Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                    for (int i = 0; i < postList.size(); i++) {
+                        Log.d("GET NEARBY POSTS CALLED", postList.get(i).getString("message").toString());
+                    }
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    //Log.d("score", "Error: " + e.getMessage());
+
                 }
             }
         });
     }
-
 }
