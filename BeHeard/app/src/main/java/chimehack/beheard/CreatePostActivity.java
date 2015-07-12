@@ -42,8 +42,8 @@ public class CreatePostActivity extends AppCompatActivity {
         mSeverity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mSeverityVal = progress/20 + 1;
-                if(mSeverityVal == 6) mSeverityVal = 5;
+                mSeverityVal = progress / 20 + 1;
+                if (mSeverityVal == 6) mSeverityVal = 5;
             }
 
             @Override
@@ -52,8 +52,8 @@ public class CreatePostActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mSeverityVal = ((seekBar.getProgress()/20) + 1);
-                if(mSeverityVal == 6) mSeverityVal = 5;
+                mSeverityVal = ((seekBar.getProgress() / 20) + 1);
+                if (mSeverityVal == 6) mSeverityVal = 5;
             }
         });
 
@@ -62,9 +62,13 @@ public class CreatePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: translate location text to LONG/LAT and pass as PARSE GEOPOINT
-                createPost(new ParseGeoPoint(37.7763,-122.417), mMessage.getText().toString(), mSeverityVal);
-                Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
-                startActivity(i);
+                if (mMessage.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Empty Message", Toast.LENGTH_SHORT).show();
+                } else {
+                    createPost(new ParseGeoPoint(37.7763, -122.417), mMessage.getText().toString(), mSeverityVal);
+                    Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
             }
         });
         mCancelButton.setOnClickListener(new View.OnClickListener() {
