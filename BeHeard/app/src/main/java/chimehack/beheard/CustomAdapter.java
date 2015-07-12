@@ -1,12 +1,14 @@
 package chimehack.beheard;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -44,6 +46,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             Button feedback2 = (Button) v.findViewById(R.id.feedback_2);
             Button feedback3 = (Button) v.findViewById(R.id.feedback_3);
             TextView severity = (TextView) v.findViewById(R.id.severity);
+            final String id = p[5];
+
 
             if (message != null) {
                 message.setText(p[0]);
@@ -54,7 +58,9 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                 feedback1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Log.d("ON CLICK ID1?", id);
+                        Log.d("haha", "baba");
+                        Log.i("haha", "baba");
                     }
                 });
             }
@@ -64,12 +70,22 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                 feedback2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Log.d("ON CLICK ID2?", id);
+
 
                     }
                 });
             }
             if (feedback3 != null) {
                 feedback3.setText("" + p[3] + " Me Too");
+                feedback3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.v("ON CLICK ID3?", id);
+
+
+                    }
+                });
             }
             if (severity != null) {
                 severity.setText("Severity: " + p[4]);
@@ -78,12 +94,13 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
         return v;
     }
 
-    private void incrementFeedback(String id, final String feedback) {
+    private void incrementFeedback(final String id, final String feedback) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.getInBackground(id, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     object.increment(feedback);
+
                     object.saveInBackground();
                 } else {
                     // something went wrong
