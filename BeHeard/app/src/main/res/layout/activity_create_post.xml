@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    tools:context="chimehack.beheard.CreatePostActivity"
-    android:isScrollContainer="false" >
+    android:isScrollContainer="false"
+    tools:context="chimehack.beheard.CreatePostActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -51,14 +51,14 @@
     <RelativeLayout
         android:id="@+id/textbox"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_below="@+id/toolbar">
 
         <EditText
             android:id="@+id/user_entered_message"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="#ADD8E6"
+            android:layout_height="250dp"
+            android:background="#84E9D2"
             android:gravity="center"
             android:hint="@string/user_entry_prompt"
             android:textAlignment="center"
@@ -86,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/include_location_prompt"
+            android:singleLine="true"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -124,6 +125,24 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/help_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scale1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Catcalls"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/help_text1"
+            android:layout_marginStart="10dp"
+            android:text="Groping"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/scale2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +150,26 @@
             android:layout_centerHorizontal="true"
             android:text="Medium"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/help_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scale2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Attempted Rape"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/help_text2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:text="Emotional Abuse"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/scale3"
@@ -141,6 +180,26 @@
             android:layout_marginEnd="10dp"
             android:text="High"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/help_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/scale3"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Rape"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/help_text3"
+            android:layout_marginEnd="10dp"
+            android:text="Sexual Assault"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
