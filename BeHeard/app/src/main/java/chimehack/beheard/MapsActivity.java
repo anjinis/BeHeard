@@ -65,6 +65,9 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
+
+    // TODO: MAKE SURE LATEST MARKER OVERWRITES OLDER
+    
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static final float initialZoom = 14;
     private static final double TWITTER_LAT = 37.776853, TWITTER_LNG = -122.416836;
