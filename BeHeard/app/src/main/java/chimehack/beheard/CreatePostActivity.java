@@ -21,7 +21,6 @@ import java.util.List;
 
 
 public class CreatePostActivity extends AppCompatActivity {
-    // TODO: Fix the keyboard to go down easily so that user can enter location after and send, or make sure send is visible when typing location
     Button mShareButton;
     Button mCancelButton;
     EditText mMessage;
