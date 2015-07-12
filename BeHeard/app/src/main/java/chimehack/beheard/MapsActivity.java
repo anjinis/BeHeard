@@ -306,7 +306,7 @@ public class MapsActivity extends FragmentActivity implements
                 mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                     @Override
                     public void onMapLongClick(LatLng latLng) {
-                       // resetMarker();
+                        resetMarker();
                         ParseGeoPoint location = new ParseGeoPoint(latLng.latitude,latLng.longitude);
 
                         //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
@@ -371,14 +371,14 @@ public class MapsActivity extends FragmentActivity implements
         //String location = et.getText().toString();
 
         // TODO: REMOVE THIS
-        String location = "Toronto";
+        //String location = "Toronto";
 
         // Initialize Geocoder and search
-        Geocoder gc = new Geocoder(this);
+        //Geocoder gc = new Geocoder(this);
         // Get only 1 address from the function
         // note: May throw IO Exception
         try {
-            List<Address> list = gc.getFromLocationName(location, 1);
+            /*List<Address> list = gc.getFromLocationName(location, 1);
             Address addr = list.get(0); // Get the first element in the List
             String locality = addr.getLocality();
             // Output to user what was returned from what was typed
@@ -389,7 +389,7 @@ public class MapsActivity extends FragmentActivity implements
             double longitude = addr.getLongitude();
 
             // Move map to that location
-            gotoLocation(latitude, longitude, initialZoom);
+            gotoLocation(latitude, longitude, initialZoom); */
             gotoLocation(TWITTER_LAT, TWITTER_LNG, initialZoom);
         }
         catch (Exception e) {
@@ -399,20 +399,19 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     // This removes all current markers on the map
-   /* private void resetMarker() {
+    private void resetMarker() {
         int numberOfMarkers = markers.size();
         // Remove any previous markers
         for(Marker item: markers){
             System.out.println("retrieved element: " + item);
             item.remove();
         }
-    }*/
+    }
 
     // This allows you to set a marker to a map object
     private void setMarker(String description, double latitude, double longitude, int severity) {
         // Make a new GeoCoder object
         Geocoder gc = new Geocoder(this);
-        String snippetTitle = "Unknown";
         try {
             // Get the location name suggested from Google Maps
             List<Address> list = gc.getFromLocation(latitude, longitude, 1);
@@ -423,12 +422,29 @@ public class MapsActivity extends FragmentActivity implements
             String country = addr.getCountryName();
             String postalCode = addr.getPostalCode();
             String knownName = addr.getFeatureName();
+            String snippetTitle = address; 
 
-            // Create a Marker where the snippet is the location place returned by google
-            MarkerOptions options = new MarkerOptions().title(description)
-                    .position(new LatLng(latitude, longitude))
-                    .snippet(snippetTitle)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
+            MarkerOptions options;
+            if (severity >= 4) {
+                // For customize graphics for marker, use this
+                options = new MarkerOptions().title(description)
+                        .position(new LatLng(latitude, longitude))
+                        .snippet(snippetTitle)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.red)); // color the marker to orange
+            }
+
+            else if (severity >=2) {
+                options = new MarkerOptions().title(description)
+                        .position(new LatLng(latitude, longitude))
+                        .snippet(snippetTitle)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.orange)); // color the marker to orange
+            }
+            else {
+                options = new MarkerOptions().title(description)
+                        .position(new LatLng(latitude, longitude))
+                        .snippet(snippetTitle)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow)); // color the marker to orange
+            }
             Marker marker = mMap.addMarker(options);
             markers.add(marker);
             //snippetTitle = knownName+ ", " + city + ", " + postalCode+", " + address;
@@ -437,29 +453,6 @@ public class MapsActivity extends FragmentActivity implements
             e.printStackTrace();
         }
 
-
-        /*
-        MarkerOptions options;
-        if (severity >= 4) {
-            // For customize graphics for marker, use this
-            options = new MarkerOptions().title(description)
-                    .position(new LatLng(latitude, longitude))
-                    .snippet(snippetTitle)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.red)); // color the marker to orange
-        }
-
-        else if (severity >=2) {
-            options = new MarkerOptions().title(description)
-                    .position(new LatLng(latitude, longitude))
-                    .snippet(snippetTitle)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.orange)); // color the marker to orange
-        }
-        else {
-            options = new MarkerOptions().title(description)
-                    .position(new LatLng(latitude, longitude))
-                    .snippet(snippetTitle)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow)); // color the marker to orange
-        }*/
         // For default graphics for marker, use this
         //MarkerOptions options = new MarkerOptions().title(markerTitle)
         //        .position(new LatLng(latitude, longitude))
