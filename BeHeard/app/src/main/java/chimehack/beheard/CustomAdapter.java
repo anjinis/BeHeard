@@ -10,10 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -71,17 +69,6 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             feedback1.setText("" + counter + " Send Love");
                             done = 1;
                             Log.d("ytr", id);
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-                            query.getInBackground(id, new GetCallback<ParseObject>() {
-                                public void done(ParseObject object, ParseException e) {
-                                    if (e == null) {
-                                        object.put("sendLove", counter);
-                                        object.saveInBackground();
-                                    } else {
-                                        // something went wrong
-                                    }
-                                }
-                            });
 
                         }
                     }
@@ -108,18 +95,8 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             done = 1;
                             Log.d("ytr", id);
 
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-                            query.getInBackground(id, new GetCallback<ParseObject>() {
-                                public void done(ParseObject object, ParseException e) {
-                                    if (e == null) {
-                                        object.put("notCool", counter);
-                                        object.saveInBackground();
-                                    } else {
-                                        // something went wrong
-                                    }
-                                }
-                            });
                         }
+
                     }
                 });
             }
@@ -141,17 +118,6 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             feedback3.setText("" + counter + " Me Too");
                             done = 1;
                             Log.d("ytr", id);
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-                            query.getInBackground(id, new GetCallback<ParseObject>() {
-                                public void done(ParseObject object, ParseException e) {
-                                    if (e == null) {
-                                        object.put("meToo", counter);
-                                        object.saveInBackground();
-                                    } else {
-                                        // something went wrong
-                                    }
-                                }
-                            });
                         }
                     }
                 });
