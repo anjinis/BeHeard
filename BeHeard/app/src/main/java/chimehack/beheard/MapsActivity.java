@@ -45,6 +45,10 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 
 // need FragmentActivity instead of Activity since running on fragment in activity_maps.xml
@@ -69,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         setUpMapIfNeeded();
 
         // Set up the GoogleApiClient to give back location data
@@ -77,6 +82,22 @@ public class MapsActivity extends FragmentActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        /*
+        // Add in Parse
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        String ApplicationIdParse= "ZpIt6iPESaAZmCacQ8gwPzRPiWpzSd1ojgpUMsvm";
+        String ClientIdParse="6HVSSvx7ekbf4DyR6NA64jQuHBDg8EaOfyE9L6ex";
+        Parse.initialize(this, ApplicationIdParse, ClientIdParse);
+        // Enable Key
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        // Store an example test object
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+        */
     }
 
     @Override
