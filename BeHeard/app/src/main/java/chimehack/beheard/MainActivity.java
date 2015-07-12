@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Create Button
+        // Create Post Button
         mCreatePostButton = (Button) findViewById(R.id.create_button);
         mCreatePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // ListView
-
 
         // TODO: Save Instance State + Pull Down to Reload
         ParseQuery query = ParseQuery.getQuery("Post");

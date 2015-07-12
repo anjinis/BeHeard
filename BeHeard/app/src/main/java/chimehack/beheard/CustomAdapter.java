@@ -8,6 +8,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.List;
 
 /**
@@ -46,10 +51,22 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
 
             if (feedback1 != null) {
                 feedback1.setText("" + p[1] + " Send Love");
+                feedback1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
 
             if (feedback2 != null) {
                 feedback2.setText("" + p[2] + " Not Cool");
+                feedback2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
             if (feedback3 != null) {
                 feedback3.setText("" + p[3] + " Me Too");
@@ -59,6 +76,20 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
             }
         }
         return v;
+    }
+
+    private void incrementFeedback(String id, final String feedback) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.getInBackground(id, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    object.increment(feedback);
+                    object.saveInBackground();
+                } else {
+                    // something went wrong
+                }
+            }
+        });
     }
 
 }
