@@ -150,12 +150,7 @@ public class MapsActivity extends FragmentActivity implements
         }
 
         // Call geoLocate method
-        try {
-            this.geoLocate();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        geoLocate();
 
         // Get data for Post
         Post nearbyPost = new Post();
@@ -174,13 +169,13 @@ public class MapsActivity extends FragmentActivity implements
                 if (e == null) {
                     //Log.d("score", "Retrieved " + scoreList.size() + " scores");
                     // Iterate in reverse so latest overwrites.
-                    for (int i = postList.size()-1; i >= 0; i--) {
-                        //Log.d("LALALA", postList.get(i).getString("message").toString());
-                        ParseObject curr = postList.get(i);
-                        String description = curr.getString("message");
-                        ParseGeoPoint location = curr.getParseGeoPoint("location");
-                        setMarker(description, location.getLatitude(), location.getLongitude(), i);
-                        //Log.d("BABABA", temp);
+                    for (int i = 0; i < postList.size(); i++) {
+                            //Log.d("LALALA", postList.get(i).getString("message").toString());
+                            ParseObject curr = postList.get(i);
+                            String description = curr.getString("message");
+                            ParseGeoPoint location = curr.getParseGeoPoint("location");
+                            setMarker(description, location.getLatitude(), location.getLongitude(), i);
+                            //Log.d("BABABA", temp);
                     }
                 } else {
                     //Log.d("score", "Error: " + e.getMessage());
@@ -228,6 +223,18 @@ public class MapsActivity extends FragmentActivity implements
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
+
+                // Add the My Location not_button to the map
+                // which moves camera position to show user's current location
+                // Method of finding the location is hidden from developer by Google
+                // You will notice a small not_button on the right corner of the map,
+                // Touch that and it will bring you to your location on the map.
+                // Note: Will use more battery when this is pressed
+                // cause will keep using power to use GPS
+                // Can make sure don't use GPS by commenting out
+                // uses:permission FINE_LOCATION on AndroidManifest.xml
+                // but this function WILL USE GPS and won't work if don't enable GPS
+                mMap.setMyLocationEnabled(true);
                 // add the layout for customizedInfoWindow in Google Maps
                 mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -299,13 +306,12 @@ public class MapsActivity extends FragmentActivity implements
                 mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                     @Override
                     public void onMapLongClick(LatLng latLng) {
-                        resetMarker();
+                       // resetMarker();
                         ParseGeoPoint location = new ParseGeoPoint(latLng.latitude,latLng.longitude);
 
                         //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
                         //Log.d("SOOOON", "ONE");
-
-
+                        gotoLocation(latLng.latitude, latLng.longitude, initialZoom);
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
                         query.whereNear("location", location);
                         query.whereWithinMiles("location", location, 10);
@@ -327,21 +333,10 @@ public class MapsActivity extends FragmentActivity implements
                             }
                         });
 
-                        gotoLocation(latLng.latitude, latLng.longitude, initialZoom);
                     }
                 });
-                setUpMap();
-                // Add the My Location not_button to the map
-                // which moves camera position to show user's current location
-                // Method of finding the location is hidden from developer by Google
-                // You will notice a small not_button on the right corner of the map,
-                // Touch that and it will bring you to your location on the map.
-                // Note: Will use more battery when this is pressed
-                // cause will keep using power to use GPS
-                // Can make sure don't use GPS by commenting out
-                // uses:permission FINE_LOCATION on AndroidManifest.xml
-                // but this function WILL USE GPS and won't work if don't enable GPS
-                mMap.setMyLocationEnabled(true);
+                //setUpMap();
+
             }
         }
     }
@@ -367,7 +362,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     // To locate object that are near a given text using Google's GeoCoder API
-    public void geoLocate() throws IOException {
+    public void geoLocate()  {
         // Hide the keyboard that was given to user to type
         //hideSoftKeyboard(v);
 
@@ -382,32 +377,36 @@ public class MapsActivity extends FragmentActivity implements
         Geocoder gc = new Geocoder(this);
         // Get only 1 address from the function
         // note: May throw IO Exception
-        List<Address> list = gc.getFromLocationName(location, 1);
+        try {
+            List<Address> list = gc.getFromLocationName(location, 1);
+            Address addr = list.get(0); // Get the first element in the List
+            String locality = addr.getLocality();
+            // Output to user what was returned from what was typed
+            //Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
 
-        Address addr = list.get(0); // Get the first element in the List
-        String locality = addr.getLocality();
-        // Output to user what was returned from what was typed
-        //Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+            // Get latitude and longitude values
+            double latitude = addr.getLatitude();
+            double longitude = addr.getLongitude();
 
-        // Get latitude and longitude values
-        double latitude = addr.getLatitude();
-        double longitude = addr.getLongitude();
-
-        // Move map to that location
-        gotoLocation(latitude, longitude, initialZoom);
-        gotoLocation(TWITTER_LAT, TWITTER_LNG, initialZoom);
+            // Move map to that location
+            gotoLocation(latitude, longitude, initialZoom);
+            gotoLocation(TWITTER_LAT, TWITTER_LNG, initialZoom);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     // This removes all current markers on the map
-    private void resetMarker() {
+   /* private void resetMarker() {
         int numberOfMarkers = markers.size();
         // Remove any previous markers
         for(Marker item: markers){
             System.out.println("retrieved element: " + item);
             item.remove();
         }
-    }
+    }*/
 
     // This allows you to set a marker to a map object
     private void setMarker(String description, double latitude, double longitude, int severity) {
@@ -424,6 +423,14 @@ public class MapsActivity extends FragmentActivity implements
             String country = addr.getCountryName();
             String postalCode = addr.getPostalCode();
             String knownName = addr.getFeatureName();
+
+            // Create a Marker where the snippet is the location place returned by google
+            MarkerOptions options = new MarkerOptions().title(description)
+                    .position(new LatLng(latitude, longitude))
+                    .snippet(snippetTitle)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
+            Marker marker = mMap.addMarker(options);
+            markers.add(marker);
             //snippetTitle = knownName+ ", " + city + ", " + postalCode+", " + address;
             snippetTitle = address;
         } catch (Exception e) {
@@ -431,12 +438,7 @@ public class MapsActivity extends FragmentActivity implements
         }
 
 
-        // Create a Marker where the snippet is the location place returned by google
-        //MarkerOptions options = new MarkerOptions().title(description)
-        //        .position(new LatLng(latitude, longitude))
-        //        .snippet(snippetTitle)
-        //        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange
-
+        /*
         MarkerOptions options;
         if (severity >= 4) {
             // For customize graphics for marker, use this
@@ -457,7 +459,7 @@ public class MapsActivity extends FragmentActivity implements
                     .position(new LatLng(latitude, longitude))
                     .snippet(snippetTitle)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.yellow)); // color the marker to orange
-        }
+        }*/
         // For default graphics for marker, use this
         //MarkerOptions options = new MarkerOptions().title(markerTitle)
         //        .position(new LatLng(latitude, longitude))
@@ -469,8 +471,7 @@ public class MapsActivity extends FragmentActivity implements
         // Note: Will not remove existing markers
         // Thus, assigned it to created marker reference above to remove later
         // Assign to marker to be removed in future
-        Marker marker = mMap.addMarker(options);
-        markers.add(marker);
+
     }
 
     // Hide the softkeyboard from the screen

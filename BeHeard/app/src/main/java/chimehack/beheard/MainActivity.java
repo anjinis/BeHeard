@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String[]> localDB = new ArrayList<String[]>();
                 if (e == null) {
                     for (int i = 0; i < postList.size(); i++) {
-                        Log.i("Post #" + (i + 1), postList.get(i).getString("message"));
+                        //Log.i("Post #" + (i + 1), postList.get(i).getString("message"));
                         String[] eachPost = new String[6];
                         eachPost[0] = postList.get(i).getString("message");
                         eachPost[1] = "" + postList.get(i).getInt("sendLove");
