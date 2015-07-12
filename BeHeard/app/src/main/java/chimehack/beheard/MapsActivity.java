@@ -65,9 +65,6 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
-    // TODO: MAKE SURE LATEST MARKER OVERWRITES OLDER
-
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private static final float initialZoom = 14;
     private static final double TWITTER_LAT = 37.776853, TWITTER_LNG = -122.416836;
@@ -176,12 +173,12 @@ public class MapsActivity extends FragmentActivity implements
             public void done(List<ParseObject> postList, ParseException e) {
                 if (e == null) {
                     //Log.d("score", "Retrieved " + scoreList.size() + " scores");
-                    for (int i = 0; i < postList.size(); i++) {
+                    // Iterate in reverse so latest overwrites.
+                    for (int i = postList.size()-1; i >= 0; i--) {
                         //Log.d("LALALA", postList.get(i).getString("message").toString());
                         ParseObject curr = postList.get(i);
                         String description = curr.getString("message");
                         ParseGeoPoint location = curr.getParseGeoPoint("location");
-                        // TODO: Change severity
                         setMarker(description, location.getLatitude(), location.getLongitude(), i);
                         //Log.d("BABABA", temp);
                     }

@@ -21,6 +21,7 @@ import java.util.List;
 
 
 public class CreatePostActivity extends AppCompatActivity {
+    // TODO: Fix the keyboard to go down easily so that user can enter location after and send, or make sure send is visible when typing location
     Button mShareButton;
     Button mCancelButton;
     EditText mMessage;
@@ -61,7 +62,6 @@ public class CreatePostActivity extends AppCompatActivity {
             }
         });
 
-
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +86,7 @@ public class CreatePostActivity extends AppCompatActivity {
                         createPost(new ParseGeoPoint(latitude, longitude), mMessage.getText().toString(), mSeverityVal);
                         Intent i = new Intent(CreatePostActivity.this, MainActivity.class);
                         startActivity(i);
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), "Can't get coordinates based on location entered", Toast.LENGTH_SHORT).show();
                     }
