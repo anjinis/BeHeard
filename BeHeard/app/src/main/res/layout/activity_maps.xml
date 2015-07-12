@@ -33,6 +33,15 @@ Note: You can also set initial state of map inside Java code
             android:layout_gravity="left|center_vertical"
             android:text="Location: "
             android:textSize="20sp"/>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+        </ListView>
+
     </LinearLayout>
 
     <fragment
