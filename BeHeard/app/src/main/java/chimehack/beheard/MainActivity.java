@@ -22,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //
         setupParse();
 
         Post pf = new Post();
-        pf.createPost(new ParseGeoPoint(40, 45), "i need help. some guy walked into me and it felt awkward...", 2);
-        pf.createPost(new ParseGeoPoint(30, 45), "this is another test", 0);
+        //pf.createPost(new ParseGeoPoint(40, 45), "i need help. some guy walked into me and it felt awkward...", 2);
+        //pf.createPost(new ParseGeoPoint(30, 45), "this is another test", 0);
         pf.getAll();
 
         pf.getCard("wdUJCnCLMy");

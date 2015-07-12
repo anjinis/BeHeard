@@ -64,7 +64,8 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private static final float initialZoom = 15;
+    private static final float initialZoom = 14;
+    private static final double TWITTER_LAT = 37.776853, TWITTER_LNG = -122.416836;
 
     // To initialize how often to detect location changes
     private LocationRequest mLocationRequest;
@@ -140,6 +141,38 @@ public class MapsActivity extends FragmentActivity implements
         catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Get data for Post
+        Post nearbyPost = new Post();
+        // TODO: CHANGE TO CURRENT USER GIVEN LOCATION
+        ParseGeoPoint location = new ParseGeoPoint(TWITTER_LAT,TWITTER_LNG);
+
+        //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
+        //Log.d("SOOOON", "ONE");
+
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+        query.whereNear("location", location);
+        query.whereWithinMiles("location", location, 30);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> postList, ParseException e) {
+                if (e == null) {
+                    //Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                    for (int i = 0; i < postList.size(); i++) {
+                        //Log.d("LALALA", postList.get(i).getString("message").toString());
+                        ParseObject curr = postList.get(i);
+                        String description = curr.getString("message");
+                        ParseGeoPoint location = curr.getParseGeoPoint("location");
+                        setMarker(description, location.getLatitude(), location.getLongitude());
+                        //Log.d("BABABA", temp);
+                    }
+                } else {
+                    //Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+        //Log.d("SOOOON", "TWO");
+
     }
 
     @Override
@@ -206,7 +239,7 @@ public class MapsActivity extends FragmentActivity implements
                         // as it will always be unique.
                         // Solution 2: Pass everything inside Snippet, comma separated and get the values there =)
                         //tvDescription.setText("This place is horrible, all the guys hit on me. I am never coming back to this party again");
-                        tvDescription.setText(getDescriptionFromMarkerSoon(markerPos.latitude, markerPos.longitude));
+                        tvDescription.setText(marker.getTitle());
                         // Return the view created
                         return v;
                     }
@@ -217,7 +250,34 @@ public class MapsActivity extends FragmentActivity implements
                     // It will pass in the latLng object of location that was clicked
                     @Override
                     public void onMapClick(LatLng latLng) {
-                        setMarker("Hey", latLng.latitude, latLng.longitude);
+                        //setMarker("Hey", latLng.latitude, latLng.longitude);
+                        ParseGeoPoint location = new ParseGeoPoint(latLng.latitude,latLng.longitude);
+
+                        //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
+                        //Log.d("SOOOON", "ONE");
+
+
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+                        query.whereNear("location", location);
+                        query.whereWithinMiles("location", location, 10);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> postList, ParseException e) {
+                                if (e == null) {
+                                    //Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                                    for (int i = 0; i < postList.size(); i++) {
+                                        //Log.d("LALALA", postList.get(i).getString("message").toString());
+                                        ParseObject curr = postList.get(i);
+                                        String description = curr.getString("message");
+                                        ParseGeoPoint location = curr.getParseGeoPoint("location");
+                                        setMarker(description, location.getLatitude(), location.getLongitude());
+                                        //Log.d("BABABA", temp);
+                                    }
+                                } else {
+                                    //Log.d("score", "Error: " + e.getMessage());
+                                }
+                            }
+                        });
+
                     }
                 });
 
@@ -226,6 +286,34 @@ public class MapsActivity extends FragmentActivity implements
                     @Override
                     public void onMapLongClick(LatLng latLng) {
                         resetMarker();
+                        ParseGeoPoint location = new ParseGeoPoint(latLng.latitude,latLng.longitude);
+
+                        //ParseQuery<ParseObject> query = nearbyPost.getNearbyPosts(new ParseGeoPoint(0, 0));
+                        //Log.d("SOOOON", "ONE");
+
+
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+                        query.whereNear("location", location);
+                        query.whereWithinMiles("location", location, 10);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            public void done(List<ParseObject> postList, ParseException e) {
+                                if (e == null) {
+                                    //Log.d("score", "Retrieved " + scoreList.size() + " scores");
+                                    for (int i = 0; i < postList.size(); i++) {
+                                        //Log.d("LALALA", postList.get(i).getString("message").toString());
+                                        ParseObject curr = postList.get(i);
+                                        String description = curr.getString("message");
+                                        ParseGeoPoint location = curr.getParseGeoPoint("location");
+                                        setMarker(description, location.getLatitude(), location.getLongitude());
+                                        //Log.d("BABABA", temp);
+                                    }
+                                } else {
+                                    //Log.d("score", "Error: " + e.getMessage());
+                                }
+                            }
+                        });
+
+                        gotoLocation(latLng.latitude, latLng.longitude, initialZoom);
                     }
                 });
                 setUpMap();
@@ -261,7 +349,7 @@ public class MapsActivity extends FragmentActivity implements
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(locationObject, zoomValue);
         mMap.moveCamera(update);
         // set marker to new object
-        setMarker("Other Marker", latitude, longitude);
+        //setMarker("Other Marker", latitude, longitude);
     }
 
     // To locate object that are near a given text using Google's GeoCoder API
@@ -293,6 +381,8 @@ public class MapsActivity extends FragmentActivity implements
 
         // Move map to that location
         gotoLocation(latitude, longitude, initialZoom);
+        gotoLocation(TWITTER_LAT, TWITTER_LNG, initialZoom);
+
     }
 
     // This removes all current markers on the map
@@ -306,7 +396,7 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     // This allows you to set a marker to a map object
-    private void setMarker(String markerTitle, double latitude, double longitude) {
+    private void setMarker(String description, double latitude, double longitude) {
         // Make a new GeoCoder object
         Geocoder gc = new Geocoder(this);
         String snippetTitle = "Unknown";
@@ -327,7 +417,7 @@ public class MapsActivity extends FragmentActivity implements
         }
 
         // Create a Marker where the snippet is the location place returned by google
-        MarkerOptions options = new MarkerOptions().title(markerTitle)
+        MarkerOptions options = new MarkerOptions().title(description)
                 .position(new LatLng(latitude, longitude))
                 .snippet(snippetTitle)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)); // color the marker to orange

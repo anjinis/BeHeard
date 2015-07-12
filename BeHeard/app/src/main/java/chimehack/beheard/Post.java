@@ -68,7 +68,6 @@ public class Post {
         });
     }
     public void getFeed() {
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.setLimit(10);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -113,7 +112,7 @@ public class Post {
             }
         });
     }
-    public void getNearbyPosts(ParseGeoPoint location) {
+    public ParseQuery<ParseObject> getNearbyPosts(ParseGeoPoint location) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
         query.whereNear("location", location);
         query.whereWithinMiles("location", location, 3);
@@ -130,5 +129,7 @@ public class Post {
                 }
             }
         });
+        return query;
+
     }
 }
