@@ -14,7 +14,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    Button mFeedButton;
     Button mMapButton;
+    Button mCreatePostButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        
 
         // Maps Button
         mMapButton = (Button) findViewById(R.id.map_button);
@@ -46,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Create Button
+        mCreatePostButton = (Button) findViewById(R.id.create_button);
+        mCreatePostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, CreatePost.class);
+                startActivity(i);
+            }
+        });
+
         // ListView
         ListView feed = (ListView) findViewById(R.id.list);
         ListAdapter customAdapter = new CustomAdapter(this, R.layout.row_layout, pf.getFeedPosts());
         feed.setAdapter(customAdapter);
+
+
     }
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
