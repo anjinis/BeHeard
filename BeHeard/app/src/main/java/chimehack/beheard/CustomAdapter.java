@@ -108,16 +108,6 @@ public class CustomAdapter extends ArrayAdapter<String[]> {
                             done = 1;
                             Log.d("ytr", id);
 
-                        }
-
-                        if (done == 0) {
-                            counter = counter + 1;
-                            Log.d("yuyu", String.valueOf(counter));
-                            Button feedback2 = (Button) v.findViewById(R.id.feedback_2);
-                            feedback2.setText("" + counter + " Not Cool");
-                            done = 1;
-                            Log.d("ytr", id);
-
                             ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
                             query.getInBackground(id, new GetCallback<ParseObject>() {
                                 public void done(ParseObject object, ParseException e) {
