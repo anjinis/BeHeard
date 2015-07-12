@@ -5,18 +5,26 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button mMapButton;
     Button mCreatePostButton;
+    ListView mFeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +61,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Post pf = new Post();
-        
         // ListView
-        ListView feed = (ListView) findViewById(R.id.list);
-        ListAdapter customAdapter = new CustomAdapter(this, R.layout.row_layout, pf.getFeedPosts());
-        feed.setAdapter(customAdapter);
 
+        ParseQuery query = ParseQuery.getQuery("Post");
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> postList, ParseException e) {
+                ArrayList<String[]> localDB = new ArrayList<String[]>();
+                if (e == null) {
+                    for (int i = 0; i < postList.size(); i++) {
+                        Log.i("Post #" + (i + 1), postList.get(i).getString("message"));
+                        String[] eachPost = new String[5];
+                        eachPost[0] = postList.get(i).getString("message");
+                        eachPost[1] = "" + postList.get(i).getInt("sendLove");
+                        eachPost[2] = "" + postList.get(i).getInt("notCool");
+                        eachPost[3] = "" + postList.get(i).getInt("meToo");
+                        eachPost[4] = "" + postList.get(i).getInt("severity");
+                        localDB.add(eachPost);
+                    }
+                } else {
+                    Log.e("FATAL", e.getMessage());
+                }
+                mFeed = (ListView) findViewById(R.id.list);
+                ListAdapter customAdapter = new CustomAdapter(MainActivity.this, R.layout.row_layout, localDB);
+                mFeed.setAdapter(customAdapter);
+            }
+        });
 
     }
+
 
     @Override
     protected void onResume() {

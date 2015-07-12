@@ -49,7 +49,7 @@ public class Post {
                 }
             }
         });
-        mUserPosts.add(post.getObjectId());
+        //mUserPosts.add(post.getObjectId());
 
     }
 

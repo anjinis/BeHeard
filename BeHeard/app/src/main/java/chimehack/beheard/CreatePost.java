@@ -2,35 +2,65 @@ package chimehack.beheard;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 
 public class CreatePost extends AppCompatActivity {
+    Button mCreateButton;
+    Button mCancelButton;
+    EditText mMessage;
+
+    Post mPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+
+        mPost = new Post();
+
+        mCreateButton = (Button) findViewById(R.id.create_button);
+        mCancelButton = (Button) findViewById(R.id.cancel_button);
+
+        mCreateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_create_post, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up not_button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+
+    private void createPost(ParseGeoPoint location, String message, int severity) {
+        final ParseObject post = new ParseObject("Post");
+        post.put("message", message);
+        //ParseGeoPoint point = new ParseGeoPoint(40,40);
+        post.put("location", location);
+        post.put("sendLove", 0);
+        post.put("notCool", 0);
+        post.put("meToo", 0);
+        post.put("severity", severity);
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    String id = post.getObjectId();
+                } else {
+                    Log.e("FAILURE", "FAILED TO MAKE POST");
+                }
+            }
+        });
+    }
 }
